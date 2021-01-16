@@ -17,4 +17,4 @@ class PoseDetector():
         datum = op.Datum()
         datum.cvInputData = imageToProcess
         self.opWrapper.emplaceAndPop([datum])
-        return datum.poseKeypoints
+        return datum.poseKeypoints, datum.cvOutputData

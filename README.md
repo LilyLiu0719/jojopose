@@ -18,4 +18,4 @@ numpy array with shape (n, m, 3)
 - n: number of people
 - m: number of keypoints(<=25) 
 - 3: x, y axis and score(0-1)
-![](./keypoints_pose_25.png)
+![ ](./images/keypoints_pose_25.png)
