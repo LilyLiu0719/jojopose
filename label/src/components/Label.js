@@ -1,19 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Button, Upload } from "antd";
+import { Button, Upload, Layout, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
-import { initialize, resetPoly, updateImage } from "../canvas";
+import { initialize, resetPoly, updateImage, resizeStage } from "../canvas";
+
+import classes from "./Label.module.css";
+
+const { Content, Footer } = Layout;
 
 export default function Label() {
-  const [fileList, updateFileList] = useState([]);
   // initialize canvas after div#container is mounted
-  useEffect(initialize, []);
+  useEffect(() => {
+    const parent = document.getElementById("stage-parent");
+    const stage = initialize(parent.clientWidth, parent.clientHeight);
+    window.addEventListener("resize", () => {
+      resizeStage(stage, parent.clientWidth, parent.clientHeight);
+    });
+  }, []);
   return (
-    <>
-      <div className="left-panel">
+    <Layout style={{ height: "100%" }}>
+      <Content id="stage-parent">
+        <div id="container" />
+      </Content>
+      <Footer className={classes.footer} style={{ backgroundColor: "#fff" }}>
         <Upload
           type="primary"
-          fileList={fileList}
+          maxCount={1}
+          listType="picture"
           beforeUpload={(file) => {
             let reader = new FileReader();
             reader.addEventListener("loadend", () => {
@@ -22,23 +35,20 @@ export default function Label() {
             reader.readAsDataURL(file);
             return false; // Do not send http request
           }}
-          onChange={(info) => {
-            // Only keep the last file uploaded
-            updateFileList([info.fileList.pop()]);
-          }}
+          className={classes.rowFlex}
+          style={{ alignSelf: "flex-start" }}
         >
           <Button icon={<UploadOutlined />}>Upload Image</Button>
         </Upload>
-        <Button type="primary" onClick={null}>
-          Download
-        </Button>
-        <Button type="primary" onClick={resetPoly}>
-          Clear
-        </Button>
-      </div>
-      <div className="right-panel">
-        <div id="container" />
-      </div>
-    </>
+        <Space>
+          <Button danger onClick={resetPoly}>
+            Clear points
+          </Button>
+          <Button type="primary" onClick={null}>
+            Confirm
+          </Button>
+        </Space>
+      </Footer>
+    </Layout>
   );
 }
