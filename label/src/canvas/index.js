@@ -6,11 +6,9 @@ const flattenedPoints = [];
 const indicationPoints = [];
 let finished = false;
 let mouseOverFirstPoint = false;
+let imageInfo = null;
 
 // Konva variables
-const width = window.innerWidth;
-const height = window.innerHeight - 50;
-
 // Background image layer
 const layerImg = new Konva.Layer();
 const backgroundImage = new Konva.Image({
@@ -35,7 +33,7 @@ layerDraw.add(indicationLine);
 const pointGroup = new Konva.Group();
 layerDraw.add(pointGroup);
 
-function initCanvas() {
+function initCanvas(width, height) {
   const stage = new Konva.Stage({
     container: "container",
     width: width,
@@ -49,8 +47,8 @@ function initCanvas() {
   stage.on("mousemove", (evt) => {
     if (finished) return;
     const { x, y } = stage.getPointerPosition();
-    indicationPoints[0] = x;
-    indicationPoints[1] = y;
+    indicationPoints[0] = x / stage.scaleX();
+    indicationPoints[1] = y / stage.scaleY();
     layerDraw.batchDraw();
   });
 
@@ -65,11 +63,12 @@ function initCanvas() {
     }
 
     const pos = stage.getPointerPosition();
-    addPoint(ind, pos.x, pos.y);
+    addPoint(ind, pos.x / stage.scaleX(), pos.y / stage.scaleY());
     layerDraw.batchDraw();
   });
 
   stage.batchDraw();
+  return stage;
 }
 
 // Private
@@ -87,6 +86,14 @@ function openPoly() {
   finished = false;
 }
 
+function dragBound(pos) {
+  const stage = this.getStage();
+  return {
+    x: Math.max(Math.min(pos.x, stage.width()), 0),
+    y: Math.max(Math.min(pos.y, stage.height()), 0),
+  };
+}
+
 function addPoint(ind, x, y) {
   // Add a new vertex to polygon
   flattenedPoints.push(x, y);
@@ -95,6 +102,7 @@ function addPoint(ind, x, y) {
   const newPoint = new Konva.Rect({
     x: x,
     y: y,
+    dragBoundFunc: dragBound,
     ...pointAttr,
   });
   pointGroup.add(newPoint);
@@ -132,8 +140,8 @@ function addPoint(ind, x, y) {
 }
 
 // Public
-export function initialize() {
-  initCanvas();
+export function initialize(width, height) {
+  return initCanvas(width, height);
 }
 
 export function resetPoly() {
@@ -147,12 +155,36 @@ export function resetPoly() {
 export function updateImage(src) {
   let image = new Image();
   image.onload = () => {
-    const scale = Math.min(width / image.width, height / image.height);
-    backgroundImage.width(image.width * scale);
-    backgroundImage.height(image.height * scale);
+    const parent = document.getElementById("stage-parent");
+    const scale = Math.min(
+      parent.clientWidth / image.width,
+      parent.clientHeight / image.height
+    );
+
+    const newHeight = Math.ceil(image.height * scale);
+    const newWidth = Math.ceil(image.width * scale);
+    imageInfo = { height: newHeight, width: newWidth };
+    backgroundImage.width(newWidth);
+    backgroundImage.height(newHeight);
     backgroundImage.image(image);
+
+    const stage = layerImg.getStage();
+    stage.width(newWidth);
+    stage.height(newHeight);
     layerImg.batchDraw();
+    resetPoly();
   };
   image.src = src;
   layerImg.batchDraw();
+}
+
+export function resizeStage(stage, width, height) {
+  if (!imageInfo) return;
+  const scale = Math.min(width / imageInfo.width, height / imageInfo.height);
+  const newWidth = Math.floor(imageInfo.width * scale);
+  const newHeight = Math.floor(imageInfo.height * scale);
+  stage.width(newWidth);
+  stage.height(newHeight);
+  stage.scale({ x: scale, y: scale });
+  stage.draw();
 }
