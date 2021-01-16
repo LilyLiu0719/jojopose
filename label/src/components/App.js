@@ -1,19 +1,11 @@
-import React from "react"
-import Canvas from "./Canvas"
-import Panel from "./Panel"
-import 'antd/dist/antd.css';
+import React from "react";
+import Label from "./Label";
+import "antd/dist/antd.css";
 
-export default () => {
+export default function App() {
   return (
-    <>
-      <div className="App">
-        <div className="left-panel">
-          <Panel />
-        </div>
-        <div className="right-panel">
-          <Canvas />
-        </div>
-      </div>
-    </>
-  )
+    <div className="App">
+      <Label />
+    </div>
+  );
 }
