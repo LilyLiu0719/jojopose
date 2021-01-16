@@ -112,7 +112,12 @@ function addPoint(ind, x, y) {
     const { x, y } = evt.target.attrs;
     flattenedPoints[ind] = x;
     flattenedPoints[ind + 1] = y;
-
+    if (flattenedPoints.length === ind + 2) {
+      indicationPoints[0] = x;
+      indicationPoints[1] = y;
+      indicationPoints[2] = x;
+      indicationPoints[3] = y;
+    }
     layerDraw.batchDraw();
   });
   newPoint.on("mouseenter", () => {
