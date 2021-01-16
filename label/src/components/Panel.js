@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Input } from 'antd'
+import { Button } from 'antd'
 
 const Panel = (handleClear) => {
   return (
     <>
-      <Button type="primary" size="large" danger onClick={null}>
+      <Button type="primary" danger onClick={null}>
         Upload
         </Button>
       <Button type="primary" onClick={null}>
