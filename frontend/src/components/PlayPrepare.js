@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
 
-const Setting = () =>{
+const PlayPrepare = () =>{
     return (
         <>
-        Setting
+        PlayPrepare
         </>
     )
 }
 
-export default Setting
+export default PlayPrepare

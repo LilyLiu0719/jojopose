@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
 
-const Setting = () =>{
+const PlayGame = () =>{
     return (
         <>
-        Setting
+        PlayGame
         </>
     )
 }
 
-export default Setting
+export default PlayGame

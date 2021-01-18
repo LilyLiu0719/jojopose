@@ -1,0 +1,70 @@
+.round-border {
+  background-color: white;
+  padding: 2em;
+  border: 4px solid black;
+  border-radius: 20px;
+}
+
+.login-box {
+  margin: 0 auto;
+  width: fit-content;
+  height: 60%;
+}
+
+.main-box {
+  /* margin: 4em 4em;
+  width: auto;
+  height: 100%; */
+  position: absolute;
+  left: 4em;
+  right: 4em;
+  top: 4em;
+  bottom: 4em;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 40px;
+  align-items: center;
+
+  padding: 80px 200px;
+}
+
+.menu-item :hover {
+  transform: scale(1.2);
+}
+
+.jojo-font {
+  display: inline-block;
+  position: relative;
+  background: transparent;
+  z-index: 0;
+  color: #e4518f;
+  font-size: 50px;
+  font-family: JoJo;
+  font-style: italic;
+  white-space: break-spaces;
+}
+
+.jojo-font:before {
+  content: attr(title);
+  position: absolute;
+  -webkit-text-stroke: 0.1em white;
+  left: 0;
+  z-index: -1;
+}
+
+.jojo-font:after {
+  content: attr(title);
+  position: absolute;
+  -webkit-text-stroke: 0.25em black;
+  left: 0;
+  top: 0;
+  z-index: -2;
+}
+
+.button {
+  cursor: pointer;
+}
