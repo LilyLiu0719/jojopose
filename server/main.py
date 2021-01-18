@@ -1,8 +1,8 @@
 from os.path import join, dirname
 
 from flask import Flask
-import routes
-from sio import sio
+from core import routes
+from core.sio import sio
 
 build_path=join(dirname(__file__), '..', 'frontend', 'build')
 app = Flask(__name__, static_url_path='', static_folder=build_path, template_folder=build_path)
