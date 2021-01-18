@@ -4,7 +4,7 @@ import { pointAttr, lineAttr, maskLineAttr } from "../canvas/constants";
 // States
 const flattenedPoints = [];
 const indicationPoints = [];
-let finished = false;
+let finished = true;
 let mouseOverFirstPoint = false;
 let imageInfo = null;
 
@@ -32,7 +32,6 @@ layerDraw.add(indicationLine);
 // Group of all points (Rects)
 const pointGroup = new Konva.Group();
 layerDraw.add(pointGroup);
-
 
 // Mask layer (for export)
 const layerMask = new Konva.Layer();
@@ -154,7 +153,7 @@ function addPoint(ind, x, y) {
 }
 
 function downloadURI(uri, name) {
-  var link = document.createElement('a');
+  var link = document.createElement("a");
   link.download = name;
   link.href = uri;
   document.body.appendChild(link);
@@ -217,7 +216,7 @@ export function downloadImage() {
   if (!finished) return;
   const stage = layerDraw.getStage();
   const dataURL = stage.toDataURL();
-  downloadURI(dataURL, 'stage.png');
+  downloadURI(dataURL, "stage.png");
 }
 
 export function downloadPreview() {
