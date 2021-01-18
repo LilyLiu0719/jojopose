@@ -22,6 +22,22 @@ cd server
 gunicorn --worker-class eventlet -w 1 -b 0.0.0.0:80 main:app # start gunicorn server on 0.0.0.0:80
 ```
 
+### Deploy setup
+
+```
+sudo nvidia-docker run -p 80:80 -itd openpose:test bash
+
+sudo docker cp ./build [container]:/jojopose/frontend/build
+
+apt-get -o Dpkg::Options::="--force-confmiss" install --reinstall netbase
+
+cd /jojopose
+git checkout HEAD -- openpose/main.py
+git pull --rebase
+
+python3 -m pip install -r requirements.txt
+```
+
 ## openpose
 
 1. Open openpose docker container
