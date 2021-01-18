@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
+const Collection = () => {
+  return <>Gallery</>;
+};
 
-const Collection = () =>{
-    return (
-        <>
-        Gallery
-        </>
-    )
-}
-
-export default Collection
+export default Collection;

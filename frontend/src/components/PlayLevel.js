@@ -5,7 +5,7 @@ const PlayLevel = () => {
   return (
     <>
       <div className="round-border main-box">
-          <JoJoText style={{fontSize: "35px"}}>CHOOSE LEVEL</JoJoText>
+        <JoJoText style={{ fontSize: "35px" }}>CHOOSE LEVEL</JoJoText>
       </div>
     </>
   );

@@ -11,9 +11,15 @@ const PlayGame = () => {
   }, [webcamRef, setImgSrc]);
   return (
     <div className="round-border main-box">
-        <JoJoText>Click on video for screenshot</JoJoText>
-      <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" onClick={capture} style={{width:"40%"}}/>
-      {imgSrc && <img src={imgSrc} style={{width:"40%", height:"auto"}}/>}
+      <JoJoText>Click on video for screenshot</JoJoText>
+      <Webcam
+        audio={false}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        onClick={capture}
+        style={{ width: "40%" }}
+      />
+      {imgSrc && <img src={imgSrc} style={{ width: "40%", height: "auto" }} />}
     </div>
   );
 };

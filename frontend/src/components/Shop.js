@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
-const Shop = () =>{
-    return (
-        <>
-        Shop
-        </>
-    )
-}
+const Shop = () => {
+  return <>Shop</>;
+};
 
-export default Shop
+export default Shop;
