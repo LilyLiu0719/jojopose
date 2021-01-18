@@ -6,7 +6,7 @@ class Item(EmbeddedDocument):
 
 class User(Document):
     username = StringField(required=True)
-    hashedPassword = StringField()
+    hashedPassword = StringField(required=True)
     inventory = ListField(EmbeddedDocumentField(Item), required=True)
     money = IntField(required=True, default=0)
 
