@@ -2,7 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Button, Upload, Layout, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
-import { initialize, resetPoly, updateImage, resizeStage, downloadImage, downloadPreview, backFromPreview } from "../canvas";
+import {
+  initialize,
+  resetPoly,
+  updateImage,
+  resizeStage,
+  downloadImage,
+  downloadPreview,
+  backFromPreview,
+} from "../canvas";
 
 import classes from "./Label.module.css";
 
