@@ -1,6 +1,7 @@
 
 from flask import request
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
+import openpose
 
 sio = SocketIO()
 
@@ -8,7 +9,6 @@ sio = SocketIO()
 def connect():
     print(request.args)
 
-
-@sio.on('get_hello')
-def hello(*args, **kwargs):
-    print('got message from socket', args, kwargs)
+@sio.event
+def process_image(image_uri):
+    emit('process_image_response', openpose.process(image_uri).decode())
