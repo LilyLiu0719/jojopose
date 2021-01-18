@@ -16,3 +16,9 @@ export const lineAttr = {
   lineCap: 'round',
   closed: false
 };
+
+export const maskLineAttr = {
+  strokeEnabled: false,
+  fill: 'black',
+  closed: true
+};

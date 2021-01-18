@@ -1,5 +1,5 @@
 import Konva from "konva";
-import { pointAttr, lineAttr } from "../canvas/constants";
+import { pointAttr, lineAttr, maskLineAttr } from "../canvas/constants";
 
 // States
 const flattenedPoints = [];
@@ -33,6 +33,12 @@ layerDraw.add(indicationLine);
 const pointGroup = new Konva.Group();
 layerDraw.add(pointGroup);
 
+
+// Mask layer (for export)
+const layerMask = new Konva.Layer();
+let polyMask = new Konva.Line({ points: flattenedPoints, ...maskLineAttr });
+layerMask.add(polyMask);
+
 function initCanvas(width, height) {
   const stage = new Konva.Stage({
     container: "container",
@@ -42,6 +48,7 @@ function initCanvas(width, height) {
 
   stage.add(layerImg);
   stage.add(layerDraw);
+  stage.add(layerMask);
 
   // Event handlers
   stage.on("mousemove", (evt) => {
@@ -120,11 +127,13 @@ function addPoint(ind, x, y) {
     }
     layerDraw.batchDraw();
   });
-  newPoint.on("mouseenter", () => {
+  newPoint.on("mouseenter", (e) => {
+    if (e.target.index !== 0 && !finished) return;
     newPoint.scale({ x: 2, y: 2 });
     layerDraw.batchDraw();
   });
-  newPoint.on("mouseleave", () => {
+  newPoint.on("mouseleave", (e) => {
+    if (e.target.index !== 0 && !finished) return;
     newPoint.scale({ x: 1, y: 1 });
     layerDraw.batchDraw();
   });
@@ -142,6 +151,16 @@ function addPoint(ind, x, y) {
   // Update the line connecting cursor and the last point
   indicationPoints[2] = x;
   indicationPoints[3] = y;
+}
+
+function downloadURI(uri, name) {
+  var link = document.createElement('a');
+  link.download = name;
+  link.href = uri;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  // delete link;
 }
 
 // Public
@@ -192,4 +211,26 @@ export function resizeStage(stage, width, height) {
   stage.height(newHeight);
   stage.scale({ x: scale, y: scale });
   stage.draw();
+}
+
+export function downloadImage() {
+  if (!finished) return;
+  const stage = layerDraw.getStage();
+  const dataURL = stage.toDataURL();
+  downloadURI(dataURL, 'stage.png');
+}
+
+export function downloadPreview() {
+  if (!finished) return;
+  layerImg.hide();
+  layerDraw.hide();
+  layerMask.show();
+  layerMask.batchDraw();
+}
+
+export function backFromPreview() {
+  if (!finished) return;
+  layerImg.show();
+  layerDraw.show();
+  layerMask.hide();
 }
