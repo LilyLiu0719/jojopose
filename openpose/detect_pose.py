@@ -1,6 +1,6 @@
 import pyopenpose as op
 
-class PoseDetector():
+class PoseDetector:
     def __init__(self, model_path="./models/"):
         # load models 
         params = dict()
