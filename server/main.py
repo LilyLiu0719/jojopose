@@ -1,6 +1,9 @@
 from os.path import join, dirname
-
+from dotenv import load_dotenv
 from flask import Flask
+
+load_dotenv()
+
 from core import routes
 from core.sio import sio
 
