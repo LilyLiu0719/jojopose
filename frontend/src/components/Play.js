@@ -5,7 +5,7 @@ import PlayGame from "./PlayGame";
 import PlayResult from "./PlayResult";
 
 const Play = () => {
-  const [playState, setPlayState] = useState("Level"); // Level, Prepare, Game, Result
+  const [playState, setPlayState] = useState("Game"); // Level, Prepare, Game, Result
   const [isWin, setIsWin] = useState(false);
   const [level, setLevel] = useState(0);
   const handleSelectLevel = (ind) => {

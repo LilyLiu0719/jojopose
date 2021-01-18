@@ -13,7 +13,7 @@ import "./App.css";
 import "./styles.css";
 
 export default () => {
-  const [gameState, setGameState] = useState("Login");
+  const [gameState, setGameState] = useState("Play");
   const [rivalId, setRivalId] = useState(null);
   const [role, setRole] = useState("");
   const id = uuidv4();

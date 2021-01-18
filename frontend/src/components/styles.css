@@ -22,6 +22,11 @@
   bottom: 4em;
 }
 
+.main-box img {
+  height: 80%;
+  padding: 1em;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -46,6 +51,7 @@
   font-family: JoJo;
   font-style: italic;
   white-space: break-spaces;
+  text-transform: uppercase;
 }
 
 .jojo-font:before {
