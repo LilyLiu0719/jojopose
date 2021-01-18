@@ -1,7 +1,7 @@
 
 from flask import request
 from flask_socketio import SocketIO, emit
-import openpose
+from . import openpose
 
 sio = SocketIO()
 
