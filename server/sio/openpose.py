@@ -37,17 +37,28 @@ def process(data_uri):
     ret, buffer = cv2.imencode('.png', img)
     return b'data:image/png;base64,' + base64.b64encode(buffer)
 
-def getScore(imageToProcess, mask):
-    if not imageToProcess.shape[:2] == mask.shape[:2]:
-        print(f"[!] ERROR: image shape must match to mask! {imageToProcess.shape} != {mask.shape}")
+def getScore(imageToProcess, mask, background, answer, vis=False):
+    if not len(answer)==25:
+        print(f"[!] ERROR in getScore: answer length must be 25! {len(answer)}")
         return -1, []
+        
+    if not imageToProcess.shape[:2] == mask.shape[:2]:
+        print(f"[!] ERROR in getScore: images shape must match! {background.shape} {mask.shape} {photo.shape}")
+        return -1, []
+        
     if mask.shape[2]==4:
         mask = mask[:, :, 3]
-    keyPoints, _ = pd.processImage(imageToProcess)
+    keyPoints, data = pd.processImage(imageToProcess)
+    if vis:
+        cv2.imwrite("../images/testKeypoints.png", data)
     match = [False]*25
     for keyPoint in keyPoints:
         for i, point in enumerate(keyPoint):
             if point[2]>0:
-                if mask[int(point[1]), int(point[0])]==0:
+                if mask[int(point[1]), int(point[0])]>0:
                     match[i]=True
-    return match.count(True), match
+    #if match==answer:
+    if True:
+        merge = background.copy()
+        merge[mask>0] = imageToProcess[mask>0]
+    return match, merge
