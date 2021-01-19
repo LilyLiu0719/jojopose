@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { CREATE_USER_MUTATION } from "../graphql";
 import { User } from "../contexts/user";
-import displayStatus from "../utils/displayStatus";
 
 import Login from "./Login";
 import Menu from "./Menu";
@@ -17,7 +14,6 @@ import "./styles.css";
 export default function App() {
   const [gameState, setGameState] = useState("Login");
   const [user, setUser] = useState(null);
-  const createUser = useMutation(CREATE_USER_MUTATION)[0];
 
   return (
     <div className="background">
@@ -31,29 +27,9 @@ export default function App() {
         )}
         {user === null ? (
           <Login
-            onLogin={(username, password) => {
-              createUser({ variables: { username, password } })
-                .then(({ data }) => {
-                  if (data.createUser.ok) {
-                    displayStatus({
-                      type: "success",
-                      msg: "Successfully logged in.",
-                    });
-                    setGameState("Menu");
-                    setUser(data.createUser.user);
-                  } else {
-                    displayStatus({
-                      type: "danger",
-                      msg: "Wrong password or username is taken.",
-                    });
-                  }
-                })
-                .catch(() =>
-                  displayStatus({
-                    type: "danger",
-                    msg: "Error occurred when trying to log in.",
-                  })
-                );
+            onLogin={(user) => {
+              setGameState("Menu");
+              setUser(user);
             }}
           />
         ) : (

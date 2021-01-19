@@ -1,7 +1,7 @@
 import React from "react";
 
 export const User = React.createContext({
-  user: null,
+  user: {},
   setUser: (user) => {},
 });
 User.displayName = "User";
