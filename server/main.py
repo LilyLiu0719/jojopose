@@ -1,12 +1,18 @@
 from os.path import join, dirname
-
+from dotenv import load_dotenv
 from flask import Flask
-import routes
-from sio import sio
+from flask_graphql import GraphQLView
+
+load_dotenv()
+
+from core import routes
+from core.sio import sio
+from core.schema import schema
 
 build_path=join(dirname(__file__), '..', 'frontend', 'build')
 app = Flask(__name__, static_url_path='', static_folder=build_path, template_folder=build_path)
 app.register_blueprint(routes.bp)
+app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=False))
 
 sio.init_app(app)
 

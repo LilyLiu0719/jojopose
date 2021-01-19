@@ -2,5 +2,10 @@ Flask
 Flask-SocketIO
 gunicorn
 opencv-python
-pymongo
 eventlet
+pymongo
+mongoengine
+graphene
+graphene-mongo
+Flask-GraphQL
+python-dotenv

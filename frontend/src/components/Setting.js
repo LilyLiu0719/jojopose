@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 
+const Setting = () => {
+  return <>Setting</>;
+};
 
-const Setting = () =>{
-    return (
-        <>
-        Setting
-        </>
-    )
-}
-
-export default Setting
+export default Setting;

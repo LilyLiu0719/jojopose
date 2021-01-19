@@ -3,7 +3,7 @@ import { Input, Space } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import JoJoText from "./JoJoText";
 
-const Login = ({onLogin}) => {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [pwd, setPwd] = useState("");
   const pwdRef = useRef(null);

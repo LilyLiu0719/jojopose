@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button, Upload, Layout, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -8,6 +8,13 @@ import useSocket from "../hooks/useSocket";
 export default function TestUpload(props) {
   const socket = useSocket(props.id);
   const [image, setImage] = useState("");
+  const [processedImage, setProcessedImage] = useState("");
+  useEffect(() => {
+    socket.on("process_image_response", (data) => {
+      console.log("received");
+      setProcessedImage(data);
+    });
+  }, [socket]);
 
   return (
     <>
@@ -35,6 +42,7 @@ export default function TestUpload(props) {
       >
         Send
       </Button>
+      <img src={processedImage} alt="result" />
     </>
   );
 }

@@ -6,9 +6,6 @@ function createSocket(id) {
   s.on("connect", () => {
     console.log("connected", id);
   });
-  s.on("process_image_response", (data) => {
-    console.log("receive response", data);
-  });
   return s;
 }
 
