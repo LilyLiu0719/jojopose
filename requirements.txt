@@ -9,3 +9,4 @@ graphene
 graphene-mongo
 Flask-GraphQL
 python-dotenv
+bcrypt

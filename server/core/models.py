@@ -1,4 +1,4 @@
-from mongoengine import EmbeddedDocument, Document, StringField, ReferenceField, ListField, IntField, EmbeddedDocumentField
+from mongoengine import EmbeddedDocument, Document, EmbeddedDocumentListField, StringField, ReferenceField, ListField, IntField, EmbeddedDocumentField
 
 class Item(EmbeddedDocument):
     name = StringField(required=True)
@@ -7,7 +7,7 @@ class Item(EmbeddedDocument):
 class User(Document):
     username = StringField(required=True)
     hashedPassword = StringField(required=True)
-    inventory = ListField(EmbeddedDocumentField(Item), required=True)
+    inventory = EmbeddedDocumentListField(Item)
     money = IntField(required=True, default=0)
 
 class Image(Document):
