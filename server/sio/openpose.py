@@ -22,8 +22,7 @@ class PoseDetector:
         datum.cvInputData = imageToProcess
         self.opWrapper.emplaceAndPop([datum])
         return datum.poseKeypoints, datum.cvOutputData
-
-
+    
 modelPath = join(dirname(__file__), '..', '..', 'openpose', 'models')
 pd = PoseDetector(model_path=modelPath)
 
@@ -37,3 +36,18 @@ def process(data_uri):
     keypoint, img = pd.processImage(to_cv2_img(data_uri))
     ret, buffer = cv2.imencode('.png', img)
     return b'data:image/png;base64,' + base64.b64encode(buffer)
+
+def getScore(imageToProcess, mask):
+    if not imageToProcess.shape[:2] == mask.shape[:2]:
+        print(f"[!] ERROR: image shape must match to mask! {imageToProcess.shape} != {mask.shape}")
+        return -1, []
+    if mask.shape[2]==4:
+        mask = mask[:, :, 3]
+    keyPoints, _ = pd.processImage(imageToProcess)
+    match = [False]*25
+    for keyPoint in keyPoints:
+        for i, point in enumerate(keyPoint):
+            if point[2]>0:
+                if mask[int(point[1]), int(point[0])]==0:
+                    match[i]=True
+    return match.count(True), match
