@@ -7,7 +7,6 @@ img_exts = ['.png', '.jpg', '.jpeg']
 
 if __name__=='__main__':
     poseDetector = PoseDetector()
-
     path = sys.argv[1]
     if os.path.isdir(path):
         for f in os.listdir(path):
