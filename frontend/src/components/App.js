@@ -61,13 +61,13 @@ export default function App() {
           ) : gameState === "Menu" ? (
             <Menu onSelect={(val) => setGameState(val)} />
           ) : gameState === "Play" ? (
-            <Play />
+            <Play onToMenu={() => setGameState("Menu")} />
           ) : gameState === "Gallery" ? (
-            <Collection />
+            <Collection onToMenu={() => setGameState("Menu")} />
           ) : gameState === "Shop" ? (
-            <Shop />
+            <Shop onToMenu={() => setGameState("Menu")} />
           ) : gameState === "Setting" ? (
-            <Setting />
+            <Setting onToMenu={() => setGameState("Menu")} />
           ) : (
             <>Game State Error</>
           )}

@@ -33,13 +33,9 @@
   column-gap: 20px;
   row-gap: 40px;
   align-items: center;
-
   padding: 80px 200px;
 }
 
-.menu-item :hover {
-  transform: scale(1.2);
-}
 
 .jojo-font {
   display: inline-block;
@@ -73,4 +69,8 @@
 
 .button {
   cursor: pointer;
+}
+
+.button :hover {
+  transform: scale(1.2);
 }

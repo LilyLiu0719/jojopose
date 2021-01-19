@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import JoJoText from "./JoJoText";
 
-const PlayResult = ({ result, resultImage }) => {
+const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {
   return (
     <div className="round-border main-box">
       {result ? (
@@ -9,7 +9,17 @@ const PlayResult = ({ result, resultImage }) => {
           <JoJoText style={{ fontSize: "35px" }}>YOU WIN!</JoJoText>
           <br />
           <img src="1-1.png" alt="resultImage" />
-          <JoJoText style={{ fontSize: "35px" }}>DOWNLOAD</JoJoText>
+
+          <JoJoText className="button" style={{ fontSize: "35px" }}>
+            DOWNLOAD
+          </JoJoText>
+          <JoJoText
+            className="button"
+            style={{ fontSize: "35px" }}
+            onClick={onToMenu}
+          >
+            Menu
+          </JoJoText>
         </>
       ) : (
         <>
@@ -17,7 +27,21 @@ const PlayResult = ({ result, resultImage }) => {
           <br />
           <img src="1-1.png" alt="resultImage" />
           <br />
-          <JoJoText style={{ fontSize: "35px" }}>TRY AGAIN</JoJoText>
+          <JoJoText
+            className="button"
+            style={{ fontSize: "35px" }}
+            onClick={onToLevel}
+          >
+            TRY AGAIN
+          </JoJoText>
+          <br />
+          <JoJoText
+            className="button"
+            style={{ fontSize: "35px" }}
+            onClick={onToMenu}
+          >
+            Menu
+          </JoJoText>
         </>
       )}
     </div>
