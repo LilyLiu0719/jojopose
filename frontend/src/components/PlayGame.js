@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Webcam from "react-webcam";
-import useSocket from "../hooks/useSocket";
+import useConnection from "../hooks/useConnection";
 import JoJoText from "./JoJoText";
 
 const PERIOD_SIO = 1000;
 
-const PlayGame = ({ id, mask }) => {
-  const socket = useSocket(id);
+const PlayGame = ({ mask }) => {
+  const { socket } = useConnection();
   const webcamRef = useRef(null);
   const [imgSrc, setImgSrc] = useState(null);
   const [processedImage, setProcessedImage] = useState("");
@@ -41,7 +41,7 @@ const PlayGame = ({ id, mask }) => {
       {/* <JoJoText>Click on video for screenshot</JoJoText> */}
       <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
       <br />
-      {imgSrc && <img src={imgSrc} />}
+      {imgSrc && <img src={imgSrc} alt="screenshot" />}
     </div>
   );
 };
