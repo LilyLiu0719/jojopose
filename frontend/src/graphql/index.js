@@ -1,0 +1,2 @@
+export { STAGES_QUERY, GALLERIES_QUERY, INVENTORIES_QUERY }  from './queries'
+export { CREATE_USER_MUTATION, CREATE_STAGE_MUTATION } from './mutations'
