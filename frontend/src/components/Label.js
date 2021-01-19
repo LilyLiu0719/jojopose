@@ -32,7 +32,6 @@ export default function Label() {
       </Content>
       <Footer className={classes.footer} style={{ backgroundColor: "#fff" }}>
         <Upload
-          type="primary"
           maxCount={1}
           listType="picture"
           beforeUpload={(file) => {
