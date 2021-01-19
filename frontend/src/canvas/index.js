@@ -233,6 +233,15 @@ export function downloadImage() {
   downloadURI(dataURL, "mask.png");
 }
 
+export function getImageURI() {
+  if (!finished) return;
+  return {
+    background: layerImg.toDataURL(),
+    mask: layerMask.toDataURL(),
+    outline: layerOutline.toDataURL(),
+  };
+}
+
 export function downloadPreview() {
   if (!finished) return;
   layerImg.hide();

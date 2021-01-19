@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import useConnection from "../hooks/useConnection";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER_MUTATION } from "../graphql";
+import { User } from "../contexts/user";
+import displayStatus from "../utils/displayStatus";
+
 import Login from "./Login";
 import Menu from "./Menu";
 import Play from "./Play";
@@ -11,67 +15,66 @@ import "./App.css";
 import "./styles.css";
 
 export default function App() {
-  const [gameState, setGameState] = useState("Play");
-  const [rivalId, setRivalId] = useState(null);
-  const [role, setRole] = useState("");
-  const { id, peer, socket } = useConnection();
-
-  /**
-   * [For connect side]
-   * After this client receive its rival's id from the server,
-   * it will use 'peer' to inform its rival that the game is about to start.
-   */
-  socket.on("get_rival", (data) => {
-    const rivalId = data.id;
-    const conn = peer.connect(rivalId);
-    conn.on("open", () => {
-      conn.send(id);
-      console.log("connect side sends peer data");
-    });
-    setRivalId(rivalId);
-    setRole("call");
-  });
-
-  /**
-   * [For receiver side]
-   * It will receive rival's id from connect side.
-   */
-  peer.on("connection", (conn) => {
-    conn.on("data", (data) => {
-      const rivalId = data;
-      console.log("receiver side receives peer data");
-    });
-    setRivalId(rivalId);
-    setRole("recv");
-  });
+  const [gameState, setGameState] = useState("Login");
+  const [user, setUser] = useState(null);
+  const createUser = useMutation(CREATE_USER_MUTATION)[0];
 
   return (
     <div className="background">
       <div className="App">
-        {gameState === "Play" ? (
-          <></>
-        ) : (
+        {gameState !== "Play" ? (
           <div className="App-logo">
             <img src={logo} alt="logo" />
           </div>
+        ) : (
+          <></>
         )}
-        <div className="App-Content">
-          {gameState === "Login" ? (
-            <Login onLogin={() => setGameState("Menu")} />
-          ) : gameState === "Menu" ? (
-            <Menu onSelect={(val) => setGameState(val)} />
-          ) : gameState === "Play" ? (
-            <Play onToMenu={() => setGameState("Menu")} />
-          ) : gameState === "Gallery" ? (
-            <Collection onToMenu={() => setGameState("Menu")} />
-          ) : gameState === "Shop" ? (
-            <Shop onToMenu={() => setGameState("Menu")} />
-          ) : gameState === "Setting" ? (
-            <Setting onToMenu={() => setGameState("Menu")} />
-          ) : (
-            <>Game State Error</>
-          )}
-        </div>
+        {user === null ? (
+          <Login
+            onLogin={(username, password) => {
+              createUser({ variables: { username, password } })
+                .then(({ data }) => {
+                  if (data.createUser.ok) {
+                    displayStatus({
+                      type: "success",
+                      msg: "Successfully logged in.",
+                    });
+                    setGameState("Menu");
+                    setUser(data.createUser.user);
+                  } else {
+                    displayStatus({
+                      type: "danger",
+                      msg: "Wrong password or username is taken.",
+                    });
+                  }
+                })
+                .catch(() =>
+                  displayStatus({
+                    type: "danger",
+                    msg: "Error occurred when trying to log in.",
+                  })
+                );
+            }}
+          />
+        ) : (
+          <User.Provider value={{ user, setUser }}>
+            <div className="App-Content">
+              {gameState === "Menu" ? (
+                <Menu onSelect={(val) => setGameState(val)} />
+              ) : gameState === "Play" ? (
+                <Play onToMenu={() => setGameState("Menu")} />
+              ) : gameState === "Gallery" ? (
+                <Collection onToMenu={() => setGameState("Menu")} />
+              ) : gameState === "Shop" ? (
+                <Shop onToMenu={() => setGameState("Menu")} />
+              ) : gameState === "Setting" ? (
+                <Setting onToMenu={() => setGameState("Menu")} />
+              ) : (
+                <>Game State Error</>
+              )}
+            </div>
+          </User.Provider>
+        )}
       </div>
     </div>
   );

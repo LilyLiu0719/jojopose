@@ -14,6 +14,7 @@ class Image(Document):
     uploader = ReferenceField(User)
     background = StringField(required=True)
     mask = StringField(required=True)
+    outline = StringField(required=True)
 
 class Stage(Document):
     images = ListField(ReferenceField(Image), required=True)

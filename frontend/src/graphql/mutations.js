@@ -1,49 +1,59 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_USER_MUTATION = gql`
-  mutation createUser(
-    $username: String!
-    $password: String!
-  ) {
-    createUser(
-      data: {
-        username: $name
-        password: $target
-      }
-    ) {
+  mutation createUser($username: String!, $password: String!) {
+    createUser(username: $username, password: $password) {
       user {
-      username
-      id
-      inventory {
-        edges {
-          node {
-            name
-            quantity
+        id
+        money
+        username
+        inventory {
+          edges {
+            node {
+              name
+              quantity
+            }
           }
         }
       }
-      hashedPassword
-      money
-    }
-    ok
-  }
+      ok
     }
   }
 `;
 
-export const CREATE_STAGE_MUTATION = gql`
+// export const CREATE_STAGE_MUTATION = gql`
 
-  mutation createStage(
-    $images: String!
-    $difficulty: Int!
+//   mutation createStage(
+//     $images: String!
+//     $difficulty: Int!
+//   ) {
+//     createUser(
+//       data: {
+//         images: $images
+//         difficulty: $difficulty
+//       }
+//     ) {
+
+//     }
+//   }
+// `;
+
+export const UPLOAD_IMAGE_MUTATION = gql`
+  mutation uploadImage(
+    $uploaderID: ID
+    $background: String!
+    $mask: String!
+    $outline: String!
   ) {
-    createUser(
-      data: {
-        images: $images
-        difficulty: $difficulty
-      }
+    uploadImage(
+      uploaderID: $uploaderID
+      background: $background
+      mask: $mask
+      outline: $outline
     ) {
-
+      image {
+        id
+      }
     }
   }
 `;
