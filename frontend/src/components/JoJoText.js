@@ -1,4 +1,3 @@
-import { chain } from "list";
 import React from "react";
 
 const JoJoText = (prop) => {

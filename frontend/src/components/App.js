@@ -73,7 +73,7 @@ export default () => {
           ) : gameState === "Setting" ? (
             <Setting />
           ) : (
-            <></>
+            <>Game State Error</>
           )}
         </div>
       </div>

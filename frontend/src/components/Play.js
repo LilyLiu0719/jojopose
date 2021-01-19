@@ -27,7 +27,7 @@ const Play = () => {
       ) : playState === "Result" ? (
         <PlayResult result={isWin} />
       ) : (
-        <></>
+        <>Play State Error</>
       )}
     </>
   );
