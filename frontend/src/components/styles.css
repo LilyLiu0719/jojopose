@@ -36,6 +36,18 @@
   padding: 80px 200px;
 }
 
+.level-container {
+  /* display: grid; */
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  overflow: scroll;
+  
+}
+
+.level-container img {
+  width:100%;
+
+}
+
 
 .jojo-font {
   display: inline-block;
