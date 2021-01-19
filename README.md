@@ -20,6 +20,7 @@ cd frontend
 yarn build # create production build of frontend
 cd server
 gunicorn --worker-class eventlet -w 1 -b 0.0.0.0:80 main:app # start gunicorn server on 0.0.0.0:80
+gunicorn --worker-class eventlet -w 1 --certfile=./secret/cert1.pem --keyfile=./secret/privkey1.pem -b 0.0.0.0:443 main:app # start gunicorn server on 0.0.0.0:443
 ```
 
 ### Deploy setup
