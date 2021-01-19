@@ -1,0 +1,24 @@
+.footer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  height: 114px;
+}
+
+.rowFlex {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.rowFlex :global .ant-upload-list-picture .ant-upload-list-item {
+  margin-top: 0;
+  margin-left: 8px;
+}
+
+:global #stage-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

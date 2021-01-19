@@ -1,21 +1,65 @@
 # jojopose
+
 2020 wed-programming final project
 
+## Development
+
+### Running testing server
+
+```sh
+cd frontend
+yarn build # create production build of frontend
+cd server
+python main.py
+```
+
+## Deploy
+
+```sh
+cd frontend
+yarn build # create production build of frontend
+cd server
+gunicorn --worker-class eventlet -w 1 -b 0.0.0.0:80 main:app # start gunicorn server on 0.0.0.0:80
+gunicorn --worker-class eventlet -w 1 --certfile=./secret/cert1.pem --keyfile=./secret/privkey1.pem -b 0.0.0.0:443 main:app # start gunicorn server on 0.0.0.0:443
+```
+
+### Deploy setup
+
+```
+sudo nvidia-docker run -p 80:80 -itd openpose:test bash
+
+sudo docker cp ./build [container]:/jojopose/frontend/build
+
+apt-get -o Dpkg::Options::="--force-confmiss" install --reinstall netbase
+
+cd /jojopose
+git checkout HEAD -- openpose/main.py
+git pull --rebase
+
+python3 -m pip install -r requirements.txt
+```
+
 ## openpose
+
 1. Open openpose docker container
+
 ```
 nvidia-docker run -itd -p 8787:80 openpose:test bash
 docker exec -it <containerID> bash
 ```
+
 2. Run test
+
 ```
 cd /jojopose/openpose/
 python3 main.py <img_path>
 ```
 
 ### Output Format
+
 numpy array with shape (n, m, 3)
+
 - n: number of people
-- m: number of keypoints(<=25) 
+- m: number of keypoints(<=25)
 - 3: x, y axis and score(0-1)
-![](./keypoints_pose_25.png)
+  ![ ](./images/keypoints_pose_25.png)

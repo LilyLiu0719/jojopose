@@ -1,0 +1,12 @@
+Flask
+Flask-SocketIO
+gunicorn
+opencv-python
+eventlet
+pymongo
+mongoengine
+graphene
+graphene-mongo
+Flask-GraphQL
+python-dotenv
+bcrypt
