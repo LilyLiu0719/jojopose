@@ -38,7 +38,7 @@ const Login = ({ onLogin }) => {
             if (e.key === "Enter" && pwd) {
               // send to backend
               // login success
-              onLogin();
+              onLogin(username, pwd);
             }
           }}
         ></Input.Password>

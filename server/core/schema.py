@@ -55,12 +55,13 @@ class UploadImage(graphene.Mutation):
         uploaderID = graphene.ID()
         background = graphene.String(required=True)
         mask = graphene.String(required=True)
+        outline = graphene.String(required=True)
     
     image = graphene.Field(lambda : Image)
 
-    def mutate(root, info, background, mask, uploaderID=None):
+    def mutate(root, info, background, mask, outline, uploaderID=None):
         uploader = models.User.objects(id=uploaderID).first() if uploaderID else None
-        image = models.Image(uploader=uploader, background=background, mask=mask)
+        image = models.Image(uploader=uploader, background=background, mask=mask, outline=outline)
         image.save()
         return UploadImage(image=image)
 
