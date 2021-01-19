@@ -14,6 +14,11 @@ class User(MongoengineObjectType):
         model = models.User
         interfaces = (Node,)
 
+class Image(MongoengineObjectType):
+    class Meta:
+        model = models.Image
+        interfaces = (Node,)
+
 class Stage(MongoengineObjectType):
     class Meta:
         model = models.Stage
@@ -24,12 +29,11 @@ class Query(graphene.ObjectType):
     allStages = MongoengineConnectionField(Stage)
     allUsers = MongoengineConnectionField(User)
     allItems = MongoengineConnectionField(Item)
-    # user = graphene.Field(User)
 
 class CreateUser(graphene.Mutation):
     class Arguments:
-        username = graphene.String()
-        password = graphene.String()
+        username = graphene.String(required=True)
+        password = graphene.String(required=True)
 
     user = graphene.Field(lambda: User)
     ok = graphene.Boolean()
@@ -46,8 +50,23 @@ class CreateUser(graphene.Mutation):
         newUser.save()
         return CreateUser(user=newUser, ok=True)
 
+class UploadImage(graphene.Mutation):
+    class Arguments:
+        uploaderID = graphene.ID()
+        background = graphene.String(required=True)
+        mask = graphene.String(required=True)
+    
+    image = graphene.Field(lambda : Image)
+
+    def mutate(root, info, background, mask, uploaderID=None):
+        uploader = models.User.objects(id=uploaderID).first() if uploaderID else None
+        image = models.Image(uploader=uploader, background=background, mask=mask)
+        image.save()
+        return UploadImage(image=image)
+
+
 class Mutation(graphene.ObjectType):
     createUser = CreateUser.Field()
-
+    uploadImage = UploadImage.Field()
     
 schema = graphene.Schema(query=Query, mutation=Mutation, types=[User, Stage])

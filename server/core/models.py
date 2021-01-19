@@ -11,7 +11,7 @@ class User(Document):
     money = IntField(required=True, default=0)
 
 class Image(Document):
-    uploader = ReferenceField(User, required=True)
+    uploader = ReferenceField(User)
     background = StringField(required=True)
     mask = StringField(required=True)
 
