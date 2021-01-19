@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import io from "socket.io-client";
-import Peer from "peerjs";
+import useConnection from "../hooks/useConnection";
 import Login from "./Login";
 import Menu from "./Menu";
 import Play from "./Play";
@@ -12,13 +10,11 @@ import logo from "../static/img/logo.png";
 import "./App.css";
 import "./styles.css";
 
-export default () => {
+export default function App() {
   const [gameState, setGameState] = useState("Play");
   const [rivalId, setRivalId] = useState(null);
   const [role, setRole] = useState("");
-  const id = uuidv4();
-  const peer = new Peer(id);
-  const socket = io(document.URL, { query: { id: id } });
+  const { id, peer, socket } = useConnection();
 
   /**
    * [For connect side]
@@ -79,4 +75,4 @@ export default () => {
       </div>
     </div>
   );
-};
+}

@@ -29,3 +29,5 @@ yarn-error.log*
 .env
 
 __pycache__/
+
+server/secret
