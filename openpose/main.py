@@ -7,3 +7,4 @@ if __name__=='__main__':
     img = cv2.imread(sys.argv[1])
     keypoints = poseDetector.processImage(img)
     print(keypoints)
+    print(keypoints.shape)
