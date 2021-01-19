@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { User } from "../contexts/user";
 
 import Login from "./Login";
@@ -7,6 +7,7 @@ import Play from "./Play";
 import Collection from "./Gallery";
 import Shop from "./Shop";
 import Setting from "./Setting";
+import Label from "./Label";
 import logo from "../static/img/logo.png";
 import "./App.css";
 import "./styles.css";
@@ -14,6 +15,8 @@ import "./styles.css";
 export default function App() {
   const [gameState, setGameState] = useState("Login");
   const [user, setUser] = useState(null);
+
+  const backToMenu = useCallback(() => setGameState("Menu"), [setGameState]);
 
   return (
     <div className="background">
@@ -38,13 +41,15 @@ export default function App() {
               {gameState === "Menu" ? (
                 <Menu onSelect={(val) => setGameState(val)} />
               ) : gameState === "Play" ? (
-                <Play onToMenu={() => setGameState("Menu")} />
+                <Play onToMenu={backToMenu} />
               ) : gameState === "Gallery" ? (
-                <Collection onToMenu={() => setGameState("Menu")} />
+                <Collection onToMenu={backToMenu} />
               ) : gameState === "Shop" ? (
-                <Shop onToMenu={() => setGameState("Menu")} />
+                <Shop onToMenu={backToMenu} />
               ) : gameState === "Setting" ? (
-                <Setting onToMenu={() => setGameState("Menu")} />
+                <Setting onToMenu={backToMenu} />
+              ) : gameState === "Upload" ? (
+                <Label onToMenu={backToMenu} />
               ) : (
                 <>Game State Error</>
               )}
