@@ -1,5 +1,10 @@
 import Konva from "konva";
-import { pointAttr, lineAttr, maskLineAttr } from "../canvas/constants";
+import {
+  pointAttr,
+  lineAttr,
+  maskLineAttr,
+  outlineLineAttr,
+} from "../canvas/constants";
 
 // States
 const flattenedPoints = [];
@@ -38,6 +43,13 @@ const layerMask = new Konva.Layer();
 let polyMask = new Konva.Line({ points: flattenedPoints, ...maskLineAttr });
 layerMask.add(polyMask);
 
+const layerOutline = new Konva.Layer();
+let polyOutline = new Konva.Line({
+  points: flattenedPoints,
+  ...outlineLineAttr,
+});
+layerOutline.add(polyOutline);
+
 function initCanvas(width, height) {
   const stage = new Konva.Stage({
     container: "container",
@@ -48,6 +60,7 @@ function initCanvas(width, height) {
   stage.add(layerImg);
   stage.add(layerDraw);
   stage.add(layerMask);
+  stage.add(layerOutline);
 
   // Event handlers
   stage.on("mousemove", (evt) => {
@@ -214,9 +227,10 @@ export function resizeStage(stage, width, height) {
 
 export function downloadImage() {
   if (!finished) return;
-  const stage = layerDraw.getStage();
-  const dataURL = stage.toDataURL();
-  downloadURI(dataURL, "stage.png");
+  let dataURL = layerMask.toDataURL();
+  downloadURI(dataURL, "outline.png");
+  dataURL = layerOutline.toDataURL();
+  downloadURI(dataURL, "mask.png");
 }
 
 export function downloadPreview() {
@@ -224,7 +238,9 @@ export function downloadPreview() {
   layerImg.hide();
   layerDraw.hide();
   layerMask.show();
+  layerOutline.show();
   layerMask.batchDraw();
+  layerOutline.batchDraw();
 }
 
 export function backFromPreview() {
@@ -232,4 +248,5 @@ export function backFromPreview() {
   layerImg.show();
   layerDraw.show();
   layerMask.hide();
+  layerOutline.hide();
 }

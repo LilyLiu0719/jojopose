@@ -14,11 +14,20 @@ export const lineAttr = {
   stroke: "black",
   strokeWidth: 4,
   lineCap: 'round',
+  lineJoin: 'round',
   closed: false
 };
 
 export const maskLineAttr = {
   strokeEnabled: false,
   fill: 'black',
+  closed: true
+};
+
+export const outlineLineAttr = {
+  stroke: "black",
+  strokeWidth: 4,
+  lineCap: 'round',
+  lineJoin: 'round',
   closed: true
 };
