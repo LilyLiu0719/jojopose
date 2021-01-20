@@ -1,7 +1,7 @@
 import React from "react";
 import JoJoText from "./JoJoText";
 
-const Menu = ({ onSelect }) => {
+const Menu = ({ onSelect, onLogout }) => {
   const fontSize = ["34px", "40px"];
   return (
     <div className="menu-grid">
@@ -13,9 +13,14 @@ const Menu = ({ onSelect }) => {
           GALLERY
         </JoJoText>
       </div>
-      <div className="button" onClick={() => onSelect("Shop")}>
+      {/* <div className="button" onClick={() => onSelect("Shop")}>
         <JoJoText style={{ fontSize: fontSize[1], color: "#C0E701" }}>
           SHOP
+        </JoJoText>
+      </div> */}
+      <div className="button" onClick={() => onSelect("Upload")}>
+        <JoJoText style={{ fontSize: fontSize[1], color: "#C0E701" }}>
+          UPLOAD
         </JoJoText>
       </div>
       <div className="button" onClick={() => onSelect("Setting")}>
@@ -23,9 +28,9 @@ const Menu = ({ onSelect }) => {
           SETTING
         </JoJoText>
       </div>
-      <div className="button" onClick={() => onSelect("Upload")}>
+      <div className="button" onClick={() => onLogout()}>
         <JoJoText style={{ fontSize: fontSize[1], color: "#3978BD" }}>
-          UPLOAD
+          Logout
         </JoJoText>
       </div>
     </div>
