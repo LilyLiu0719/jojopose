@@ -1,5 +1,6 @@
 import React from "react";
 import JoJoText from "./JoJoText";
+import demo from "../static/img/demo.gif";
 
 const PlayPrepare = ({ onToLevel, onNext, stage }) => {
   return (
@@ -8,7 +9,15 @@ const PlayPrepare = ({ onToLevel, onNext, stage }) => {
       <br />
       <JoJoText style={{ fontSize: "35px" }}>with your sexy body</JoJoText>
       <br />
-      <img src={stage} />
+      <div
+        className="row-flex"
+        // style={{
+        //   padding: "1em 0",
+        // }}
+      >
+      <img src={demo} style={{width:"29%"}}/>
+      <img src={stage} style={{width:"50%", borderRadius: "30px"}}/>
+      </div>
       <br />
       <div
         className="row-flex"
@@ -17,10 +26,7 @@ const PlayPrepare = ({ onToLevel, onNext, stage }) => {
         }}
       >
         <div className="button">
-          <JoJoText
-            style={{ fontSize: "35px" }}
-            onClick={onToLevel}
-          >
+          <JoJoText style={{ fontSize: "35px" }} onClick={onToLevel}>
             back
           </JoJoText>
         </div>
