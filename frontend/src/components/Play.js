@@ -45,6 +45,7 @@ const Play = ({ onToMenu }) => {
           stage={stage}
           onFinish={(won, result) => {
             setIsWin(won);
+            setImageIndex(won ? imageIndex + 1 : 0);
             if (result) {
               setResult(result);
             }
@@ -53,6 +54,7 @@ const Play = ({ onToMenu }) => {
         />
       ) : playState === "Result" ? (
         <PlayResult
+          finished={imageIndex === stage.images.edges.length}
           result={isWin}
           onToLevel={() => {
             setPlayState("Level");
@@ -63,6 +65,9 @@ const Play = ({ onToMenu }) => {
           onToMenu={() => {
             setPlayState("Level");
             onToMenu();
+          }}
+          onToNext={() => {
+            setPlayState("Prepare");
           }}
           resultImage={result}
         />

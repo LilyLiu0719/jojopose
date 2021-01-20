@@ -2,12 +2,21 @@ import React from "react";
 import JoJoText from "./JoJoText";
 import failedImage from "../static/img/failed.jpg";
 
-const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {
+const PlayResult = ({
+  result,
+  resultImage,
+  onToMenu,
+  finished,
+  onToLevel,
+  onToNext,
+}) => {
   return (
     <div className="round-border main-box">
       {result ? (
         <>
-          <JoJoText style={{ fontSize: "35px" }}>YOU WIN!</JoJoText>
+          <JoJoText style={{ fontSize: "35px" }}>
+            {finished ? "YOU WIN!" : "SUCCESS!"}
+          </JoJoText>
           <br />
           <img src={resultImage} alt="resultImage" />
           <div
@@ -24,6 +33,11 @@ const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {
                 DOWNLOAD
               </JoJoText>
             </div>
+            {!finished && (
+              <div className="button" onClick={onToNext}>
+                <JoJoText style={{ fontSize: "35px" }}>CONTINUE</JoJoText>
+              </div>
+            )}
           </div>
         </>
       ) : (
