@@ -5,11 +5,11 @@ import PlayGame from "./PlayGame";
 import PlayResult from "./PlayResult";
 
 const Play = ({ onToMenu }) => {
-  const [playState, setPlayState] = useState("Result"); // Level, Prepare, Game, Result
+  const [playState, setPlayState] = useState("Level"); // Level, Prepare, Game, Result
   const [isWin, setIsWin] = useState(false);
-  const [level, setLevel] = useState(0);
-  const handleSelectLevel = (ind) => {
-    setLevel(ind);
+  const [stage, setStage] = useState(0);
+  const handleSelectStage = (src) => {
+    setStage(src);
     setPlayState("Prepare");
   };
   const handleGameFinish = (rst) => {
@@ -19,11 +19,11 @@ const Play = ({ onToMenu }) => {
   return (
     <>
       {playState === "Level" ? (
-        <PlayLevel onSelect={handleSelectLevel} />
+        <PlayLevel onSelect={(e)=>handleSelectStage(e)} />
       ) : playState === "Prepare" ? (
-        <PlayPrepare onNext={() => setPlayState("Game")} />
+        <PlayPrepare stage={stage} onNext={() => setPlayState("Game")} />
       ) : playState === "Game" ? (
-        <PlayGame onFinish={handleGameFinish} setIsWin={(v) => setIsWin(v)} />
+        <PlayGame stage={stage} onFinish={handleGameFinish} setIsWin={(v) => setIsWin(v)} />
       ) : playState === "Result" ? (
         <PlayResult
           result={isWin}

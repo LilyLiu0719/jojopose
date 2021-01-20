@@ -1,14 +1,14 @@
 import React from "react";
 import JoJoText from "./JoJoText";
 
-const PlayPrepare = ({ onNext }) => {
+const PlayPrepare = ({ onNext, stage }) => {
   return (
     <div className="round-border main-box">
       <JoJoText style={{ fontSize: "35px" }}>Please Fill in the shape</JoJoText>
       <br />
       <JoJoText style={{ fontSize: "35px" }}>with your sexy body</JoJoText>
       <br />
-      <img src="1-1.png" />
+      <img src={stage} />
       <br />
       <JoJoText
         className="button"
