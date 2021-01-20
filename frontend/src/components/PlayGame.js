@@ -65,7 +65,7 @@ const PlayGame = ({ onFinish, index, stage }) => {
         />
         <img className="outline" src={images.outline} alt="outline" />
         <img
-          className="tranparent-background"
+          className="transparent-background"
           src={images.background}
           alt="background"
         />

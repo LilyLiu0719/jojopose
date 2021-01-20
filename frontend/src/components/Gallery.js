@@ -10,12 +10,36 @@ const Collection = ({ onToMenu, onSelect }) => {
         </JoJoText>
 
         <div className="level-grid">
-          <img src="1-1.png" onClick={() => onSelect("1-1.png")} />
-          <img src="1-2.png" onClick={() => onSelect("1-2.png")} />
-          <img src="1-3.png" onClick={() => onSelect("1-3.png")} />
-          <img src="1-4.png" onClick={() => onSelect("1-4.png")} />
-          <img src="1-5.png" onClick={() => onSelect("1-5.png")} />
-          <img src="1-6.png" onClick={() => onSelect("1-6.png")} />
+          <img
+            src="1-1.png"
+            alt="gallery"
+            onClick={() => onSelect("1-1.png")}
+          />
+          <img
+            src="1-2.png"
+            alt="gallery"
+            onClick={() => onSelect("1-2.png")}
+          />
+          <img
+            src="1-3.png"
+            alt="gallery"
+            onClick={() => onSelect("1-3.png")}
+          />
+          <img
+            src="1-4.png"
+            alt="gallery"
+            onClick={() => onSelect("1-4.png")}
+          />
+          <img
+            src="1-5.png"
+            alt="gallery"
+            onClick={() => onSelect("1-5.png")}
+          />
+          <img
+            src="1-6.png"
+            alt="gallery"
+            onClick={() => onSelect("1-6.png")}
+          />
         </div>
 
         <div className="button">
