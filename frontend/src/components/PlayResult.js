@@ -1,5 +1,6 @@
 import React from "react";
 import JoJoText from "./JoJoText";
+import failedImage from "../static/img/failed.jpg";
 
 const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {
   return (
@@ -29,7 +30,7 @@ const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {
         <>
           <JoJoText style={{ fontSize: "35px" }}>FAILED...</JoJoText>
           <br />
-          <img src="1-1.png" alt="resultImage" />
+          <img src={failedImage} alt="road roller" />
           <br />
           <div
             className="row-flex"
