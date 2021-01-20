@@ -4,6 +4,13 @@ import cv2
 import numpy as np
 import os
 
+try:
+    import pyopenpose as op
+
+    test = False
+except ModuleNotFoundError:
+    test = True
+
 
 class PoseDetector:
     def __init__(self, model_path="./models/", test=False):
@@ -19,9 +26,6 @@ class PoseDetector:
             params = dict()
             params["model_folder"] = model_path
             print("[*] success loading model from", model_path)
-
-            # Starting OpenPose
-            import pyopenpose as op
 
             self.opWrapper = op.WrapperPython()
             self.opWrapper.configure(params)
@@ -40,7 +44,7 @@ class PoseDetector:
 
 
 modelPath = join(dirname(__file__), "..", "..", "openpose", "models")
-pd = PoseDetector(model_path=modelPath, test=True)
+pd = PoseDetector(model_path=modelPath, test=test)
 
 
 def to_cv2_img(data_uri, flag=cv2.IMREAD_COLOR):

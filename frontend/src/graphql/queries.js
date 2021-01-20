@@ -24,6 +24,7 @@ export const STAGE_QUERY = gql`
           images {
             edges {
               node {
+                id
                 background
                 outline
               }
