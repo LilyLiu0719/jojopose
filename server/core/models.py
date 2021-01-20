@@ -17,8 +17,9 @@ class Image(Document):
     outline = StringField(required=True)
 
 class Stage(Document):
+    thumbnail = StringField(required=True)
     images = ListField(ReferenceField(Image), required=True)
-    difficulty = IntField(min_value=1, max_value=5, required=True)
+    difficulty = IntField(min_value=0, max_value=5, required=True)
 
 class GalleryImage(Document):
     owner = ReferenceField(User, required=True)
