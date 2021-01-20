@@ -27,7 +27,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    audioPlayer.current.volume = volume/100;
+    audioPlayer.current.volume = volume / 100;
   }, [volume]);
 
   return (

@@ -50,10 +50,7 @@
   row-gap: 20px;
   align-items: center;
   margin-top: 2%;
-}
-
-.level-container {
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .level-container > img {

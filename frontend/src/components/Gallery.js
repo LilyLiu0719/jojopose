@@ -9,7 +9,7 @@ const GalleryItem = ({ src, onClick }) => {
   );
 };
 
-const Collection = ({ onToMenu, onSelect }) => {
+const Collection = ({ onToMenu }) => {
   const [image, setImage] = useState(null);
 
   const imgSrc = [
@@ -19,6 +19,9 @@ const Collection = ({ onToMenu, onSelect }) => {
     "1-4.png",
     "1-5.png",
     "1-6.png",
+    "2-1.png",
+    "2-2.png",
+    "2-3.png",
   ];
 
   return (
@@ -29,7 +32,7 @@ const Collection = ({ onToMenu, onSelect }) => {
         </JoJoText>
         {image ? (
           <>
-            <div className="level-container">
+            <div className="level-container" style={{ height: "80%" }}>
               <img src={image} />
             </div>
             <div
@@ -57,7 +60,7 @@ const Collection = ({ onToMenu, onSelect }) => {
           </>
         ) : (
           <>
-            <div className="level-grid">
+            <div className="level-grid" style={{ height: "80%" }}>
               {imgSrc.map((e) => (
                 <GalleryItem src={e} onClick={() => setImage(e)} />
               ))}

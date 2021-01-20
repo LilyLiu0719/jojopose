@@ -49,6 +49,11 @@ export default function Label({ onToMenu }) {
         <div id="container" />
       </Content>
       <Footer className={classes.footer} style={{ backgroundColor: "#fff" }}>
+        <div className="button">
+          <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
+            back
+          </JoJoText>
+        </div>
         <Upload
           maxCount={1}
           listType="picture"
@@ -65,6 +70,7 @@ export default function Label({ onToMenu }) {
         >
           <Button icon={<UploadOutlined />}>Upload Image</Button>
         </Upload>
+
         <Space>
           <Button danger onClick={resetPoly}>
             Clear points
@@ -93,11 +99,6 @@ export default function Label({ onToMenu }) {
           >
             Confirm
           </Button>
-          <div className="button">
-            <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
-              back
-            </JoJoText>
-          </div>
         </Space>
       </Footer>
     </Layout>
