@@ -14,8 +14,8 @@ import "./App.css";
 import "./styles.css";
 
 export default function App() {
-  const [gameState, setGameState] = useState("Menu");
-  const [user, setUser] = useState("a");
+  const [gameState, setGameState] = useState("Login");
+  const [user, setUser] = useState(null);
   const [volume, setVolume] = useState(50);
   const audioPlayer = useRef(null);
 
@@ -24,6 +24,12 @@ export default function App() {
   const handleLogout = () => {
     setGameState("Login");
     setUser(null);
+    if (audioPlayer.current) {
+      const player = audioPlayer.current;
+      player.currentTime = 0;
+      player.pause();
+      player.currentTime = 0;
+    }
   };
 
   useEffect(() => {
@@ -32,7 +38,7 @@ export default function App() {
 
   return (
     <div className="background">
-      <audio loop ref={audioPlayer} volume={0} controls>
+      <audio loop ref={audioPlayer}>
         <source src={bgm} type="audio/mpeg" />
       </audio>
 
