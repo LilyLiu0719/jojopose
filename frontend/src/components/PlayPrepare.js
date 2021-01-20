@@ -10,28 +10,39 @@ const PlayPrepare = ({ onToLevel, onNext, index, stage, loading }) => {
       <br />
       <JoJoText style={{ fontSize: "30px" }}>with your sexy body</JoJoText>
       <br />
-      <img
-        src={demo}
-        style={{ width: "29%", margin: "0 auto" }}
-        alt="demo animation"
-      />
       {loading ? (
         <div className="image-layers h-center column-flex">
           <Spin size="large" />
         </div>
       ) : (
         <>
-          <div className="image-layers h-center" style={{ background: "#000" }}>
+          <div
+            className="h-center"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "5fr 7fr",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <img
-              className="transparent-background"
-              src={stage.images.edges[index].node.background}
-              alt="example background"
+              src={demo}
+              className="h-center"
+              style={{ width: "400px", height: "400px" }}
+              alt="demo animation"
             />
-            <img
-              className="outline"
-              src={stage.images.edges[index].node.outline}
-              alt="example outline"
-            />
+            <div className="image-layers">
+              <img
+                className="transparent-background"
+                src={stage.images.edges[index].node.background}
+                alt="example background"
+              />
+              <img
+                className="outline"
+                src={stage.images.edges[index].node.outline}
+                alt="example outline"
+              />
+            </div>
           </div>
           <br />
           <div

@@ -106,7 +106,7 @@
   z-index: -2;
 }
 
-.button span{
+.button span {
   cursor: pointer;
 }
 
@@ -148,7 +148,7 @@
   z-index: 2;
 }
 
-.image-layers .tranparent-background {
+.image-layers .transparent-background {
   z-index: 1;
   opacity: 0.4;
 }
