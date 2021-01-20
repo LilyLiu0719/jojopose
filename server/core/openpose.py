@@ -60,7 +60,7 @@ def process(data_uri):
     return b"data:image/png;base64," + base64.b64encode(buffer)
 
 
-def getScore(capture, mask, background):
+def getScore(capture, mask, background, answer):
     captureDim = (capture.shape[1], capture.shape[0])
     # resize mask and background to the same size of capture
     mask = cv2.resize(mask, captureDim, interpolation=cv2.INTER_LINEAR)
@@ -83,7 +83,12 @@ def getScore(capture, mask, background):
                 # if score > 0 and is in mask
                 match[i] = True
 
-    merge = background.copy()
-    merge[mask > 0] = capture[mask > 0]
-    ret, buffer = cv2.imencode(".jpg", merge)
-    return b"data:image/jpeg;base64," + base64.b64encode(buffer)
+    threshold = answer.count(True)
+    nMatch = sum(1 for m, a in zip(match, answer) if m and a)
+    if nMatch >= threshold:
+        merge = background.copy()
+        merge[mask > 0] = capture[mask > 0]
+        ret, buffer = cv2.imencode(".jpg", merge)
+        return b"data:image/jpeg;base64," + base64.b64encode(buffer), nMatch
+    else:
+        return b"", nMatch

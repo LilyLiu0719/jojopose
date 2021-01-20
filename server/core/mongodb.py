@@ -21,12 +21,17 @@ def fetchImageWithCache(stageID, imageID):
     if exists(cache_path):
         background = cv2.imread(join(cache_path, "background.png"))
         mask = cv2.imread(join(cache_path, "mask.png"), cv2.IMREAD_UNCHANGED)
+        with open(join(cache_path, "answer"), "r") as f:
+            answer = f.read()
     else:
         image = fetchImage(imageID, cv2.IMREAD_UNCHANGED)
         background = openpose.to_cv2_img(image.background)
         mask = openpose.to_cv2_img(
             image.mask, cv2.IMREAD_UNCHANGED
         )  # preserve alpha channel
+        answer = image.answer
         cv2.imwrite(join(cache_path, "background.png"), background)
         cv2.imwrite(join(cache_path, "mask.png"), mask)
-    return mask, background
+        with open(join(cache_path, "answer"), "w") as f:
+            f.write(answer)
+    return mask, background, [c == "1" for c in answer]

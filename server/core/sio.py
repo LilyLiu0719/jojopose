@@ -15,9 +15,14 @@ def connect():
 def process_image(data):
     image_uri = data["image_uri"]
     capture = openpose.to_cv2_img(image_uri)
-    mask, background = mongodb.fetchImageWithCache(data["stage_id"], data["image_id"])
-    resultImg = openpose.getScore(capture, mask, background)
+    mask, background, answer = mongodb.fetchImageWithCache(
+        data["stage_id"], data["image_id"]
+    )
+    resultImg, score = openpose.getScore(capture, mask, background, answer)
     if resultImg:
-        emit("process_image_response", {"pass": True, "image": resultImg.decode()})
+        emit(
+            "process_image_response",
+            {"pass": True, "image": resultImg.decode(), "score": score},
+        )
     else:
-        emit("process_image_response", {"pass": False, "image": ""})
+        emit("process_image_response", {"pass": False, "image": "", "score": score})

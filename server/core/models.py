@@ -1,8 +1,19 @@
-from mongoengine import EmbeddedDocument, Document, EmbeddedDocumentListField, StringField, ReferenceField, ListField, IntField, EmbeddedDocumentField
+from mongoengine import (
+    EmbeddedDocument,
+    Document,
+    EmbeddedDocumentListField,
+    StringField,
+    ReferenceField,
+    ListField,
+    IntField,
+    EmbeddedDocumentField,
+)
+
 
 class Item(EmbeddedDocument):
     name = StringField(required=True)
     quantity = IntField(required=True)
+
 
 class User(Document):
     username = StringField(required=True)
@@ -10,16 +21,20 @@ class User(Document):
     inventory = EmbeddedDocumentListField(Item)
     money = IntField(required=True, default=0)
 
+
 class Image(Document):
     uploader = ReferenceField(User)
     background = StringField(required=True)
     mask = StringField(required=True)
     outline = StringField(required=True)
+    answer = StringField(required=True)
+
 
 class Stage(Document):
     thumbnail = StringField(required=True)
     images = ListField(ReferenceField(Image), required=True)
     difficulty = IntField(min_value=0, max_value=5, required=True)
+
 
 class GalleryImage(Document):
     owner = ReferenceField(User, required=True)

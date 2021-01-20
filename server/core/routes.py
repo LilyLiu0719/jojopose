@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template
 
-bp = Blueprint('routes', __name__, '/api')
+bp = Blueprint("routes", __name__, "/api")
 
-@bp.route('/')
+
+@bp.route("/")
 def root():
-    return render_template('index.html')
+    return render_template("index.html")

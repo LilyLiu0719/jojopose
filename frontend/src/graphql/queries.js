@@ -27,6 +27,7 @@ export const STAGE_QUERY = gql`
                 id
                 background
                 outline
+                answer
               }
             }
           }
