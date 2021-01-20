@@ -60,6 +60,7 @@
   font-style: italic;
   white-space: break-spaces;
   text-transform: uppercase;
+  cursor: default;
 }
 
 .jojo-font:before {

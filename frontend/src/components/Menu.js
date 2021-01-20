@@ -4,7 +4,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import JoJoText from "./JoJoText";
 
 const Menu = ({ onSelect }) => {
-  const [fontSize, setFontSize] = useState(["34px", "40px"]);
+  const fontSize = ["34px", "40px"];
   return (
     <div className="menu-grid">
       <div className="button" onClick={() => onSelect("Play")}>
