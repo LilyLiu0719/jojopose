@@ -16,10 +16,11 @@ import {
 } from "../canvas";
 
 import classes from "./Label.module.css";
+import JoJoText from "./JoJoText";
 
 const { Content, Footer } = Layout;
 
-export default function Label() {
+export default function Label({ onToMenu }) {
   // initialize canvas after div#container is mounted
   useEffect(() => {
     const parent = document.getElementById("stage-parent");
@@ -92,6 +93,11 @@ export default function Label() {
           >
             Confirm
           </Button>
+          <div className="button">
+            <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
+              back
+            </JoJoText>
+          </div>
         </Space>
       </Footer>
     </Layout>

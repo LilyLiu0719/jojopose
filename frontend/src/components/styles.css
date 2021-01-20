@@ -101,7 +101,7 @@
   z-index: -2;
 }
 
-.button {
+.button span{
   cursor: pointer;
 }
 
