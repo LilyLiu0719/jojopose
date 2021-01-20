@@ -1,9 +1,10 @@
+.h-center {
+  margin: 0 auto;
+}
+
 .round-border {
   background-color: white;
-  padding-top: 3em;
-  padding-bottom: 3em;
-  padding-left: 5em;
-  padding-right: 5em;
+  padding: 3em 5em;
   border: 4px solid black;
   border-radius: 20px;
 }
@@ -18,13 +19,13 @@
   position: absolute;
   left: 4em;
   right: 4em;
-  top: 4em;
-  bottom: 4em;
+  top: 2.2em;
+  bottom: 2.2em;
 }
 
 .main-box img {
-  height: 80%;
-  width: 100%;
+  max-height: 80%;
+  max-width: 100%;
   padding: 1em;
 }
 
@@ -37,6 +38,11 @@
   padding: 80px 200px;
 }
 
+.level-grid-wrapper {
+  height: calc(100% - 80px);
+  overflow-y: auto;
+}
+
 .level-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -44,7 +50,6 @@
   row-gap: 20px;
   align-items: center;
   margin-top: 2%;
-  overflow-y: scroll;
 }
 
 .level-container {
@@ -136,7 +141,7 @@
 
   padding: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 }
 
 .image-layers .outline {
@@ -146,4 +151,10 @@
 .image-layers .tranparent-background {
   z-index: 1;
   opacity: 0.4;
+}
+
+.column-flex {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
