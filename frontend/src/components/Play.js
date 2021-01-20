@@ -8,6 +8,7 @@ const Play = ({ onToMenu }) => {
   const [playState, setPlayState] = useState("Level"); // Level, Prepare, Game, Result
   const [isWin, setIsWin] = useState(false);
   const [stage, setStage] = useState(null);
+  const [result, setResult] = useState(null);
   const handleSelectStage = (src) => {
     setStage(src);
     setPlayState("Prepare");
@@ -31,6 +32,7 @@ const Play = ({ onToMenu }) => {
           stage={stage}
           onFinish={handleGameFinish}
           setIsWin={(v) => setIsWin(v)}
+          setResult={(v) => setResult(v)}
         />
       ) : playState === "Result" ? (
         <PlayResult
@@ -40,6 +42,7 @@ const Play = ({ onToMenu }) => {
             setPlayState("Level");
             onToMenu();
           }}
+          resultImage={result}
         />
       ) : (
         <>Play State Error</>

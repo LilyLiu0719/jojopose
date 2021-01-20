@@ -8,21 +8,21 @@ import outline from "../static/img/stage1-3/outline1-3.png";
 const PERIOD_SIO = 1000;
 const GAME_TIME = 2000;
 
-const PlayGame = ({ mask, onFinish, setIsWin, stage }) => {
+const PlayGame = ({ onFinish, setIsWin, stage, setResult}) => {
   const { socket } = useConnection();
   const webcamRef = useRef(null);
   const [imgSrc, setImgSrc] = useState(null);
   const [processedImage, setProcessedImage] = useState("");
   const [counter, setCounter] = useState(GAME_TIME);
 
-  const capture = useCallback(() => webcamRef.current.getScreenshot(), [
+  const capture = useCallback(() => webcamRef && webcamRef.current.getScreenshot(), [
     webcamRef,
   ]);
 
   const sendImageSIO = useCallback(() => {
     const imgSrc = capture();
     if (!imgSrc) return;
-    socket.emit("process_image", imgSrc);
+    socket.emit("process_image", {image_uri: imgSrc, stage: stage});
   }, [capture, socket]);
 
   useEffect(() => {
@@ -34,8 +34,10 @@ const PlayGame = ({ mask, onFinish, setIsWin, stage }) => {
 
   useEffect(() => {
     socket.on("process_image_response", (data) => {
-      console.log("received");
-      setProcessedImage(data);
+      if (!data.pass) return
+      setIsWin(true);
+      onFinish(true);
+      setResult(data.image);
     });
   }, [socket]);
 

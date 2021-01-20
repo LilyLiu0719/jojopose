@@ -2,7 +2,7 @@ from os.path import dirname, join
 import base64
 import cv2
 import numpy as np
-import pyopenpose as op
+import os
 
 class PoseDetector:
     def __init__(self, model_path="./models/", test=False):
@@ -11,7 +11,7 @@ class PoseDetector:
             print("[!] WARNING: in testing mode")
             testKeyPoints = np.arange(75).reshape(1, 25, 3)
             for i in range(25):
-                testKeyPoints[0][i][3] = 1.0
+                testKeyPoints[0][i][2] = 1.0
             self.testKeyPoints = testKeyPoints
         else:
             # load models 
@@ -20,6 +20,7 @@ class PoseDetector:
             print("[*] success loading model from", model_path)
 
             # Starting OpenPose
+            import pyopenpose as op
             self.opWrapper = op.WrapperPython()
             self.opWrapper.configure(params)
             self.opWrapper.start()
@@ -36,7 +37,7 @@ class PoseDetector:
             return datum.poseKeypoints, datum.cvOutputData
 
 modelPath = join(dirname(__file__), '..', '..', 'openpose', 'models')
-pd = PoseDetector(model_path=modelPath)
+pd = PoseDetector(model_path=modelPath, test=True)
 
 def to_cv2_img(data_uri):
     encoded_data = data_uri.split(',')[1]
@@ -49,12 +50,21 @@ def process(data_uri):
     ret, buffer = cv2.imencode('.png', img)
     return b'data:image/png;base64,' + base64.b64encode(buffer)
 
-def getScore(imageToProcess, mask):
+def getScore(data_uri, stage, vis=False):
+    imageToProcess = to_cv2_img(data_uri)
+    filename, ext = os.path.splitext(stage)
+    mask = cv2.imread('images/mask'+ filename + '.png', cv2.IMREAD_UNCHANGED)
+    mask = cv2.resize(mask, (imageToProcess.shape[1], imageToProcess.shape[0]), interpolation=cv2.INTER_LINEAR)
+    background = cv2.imread('images/'+ filename + '.png')
+    background = cv2.resize(background, (imageToProcess.shape[1], imageToProcess.shape[0]), interpolation=cv2.INTER_LINEAR)
+    # answer = [True]*25
+
     if not imageToProcess.shape[:2] == mask.shape[:2]:
         print(f"[!] ERROR: image shape must match to mask! {imageToProcess.shape} != {mask.shape}")
         return -1, []
     if mask.shape[2]==4:
         mask = mask[:, :, 3]
+    
     keyPoints, _ = pd.processImage(imageToProcess)
     match = [False]*25
     for keyPoint in keyPoints:
@@ -62,4 +72,11 @@ def getScore(imageToProcess, mask):
             if point[2]>0:
                 if mask[int(point[1]), int(point[0])]==0:
                     match[i]=True
-    return match.count(True), match
+    #if match==answer:
+    if True:
+        merge = background.copy()
+        merge[mask>0] = imageToProcess[mask>0]
+        ret, buffer = cv2.imencode('.png', merge)
+        return b'data:image/png;base64,' + base64.b64encode(buffer)
+    else:
+        return ""

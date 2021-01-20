@@ -8,7 +8,7 @@ const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {
         <>
           <JoJoText style={{ fontSize: "35px" }}>YOU WIN!</JoJoText>
           <br />
-          <img src="1-1.png" alt="resultImage" />
+          <img src={resultImage} alt="resultImage" />
           <div
             className="row-flex"
             style={{
