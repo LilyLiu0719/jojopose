@@ -15,30 +15,22 @@ const PlayGame = ({ mask, onFinish, setIsWin, stage }) => {
   const [processedImage, setProcessedImage] = useState("");
   const [counter, setCounter] = useState(GAME_TIME);
 
-  const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setImgSrc(imageSrc);
-  }, [webcamRef, setImgSrc]);
+  const capture = useCallback(() => webcamRef.current.getScreenshot(), [
+    webcamRef,
+  ]);
 
-  const sendImageSIO = () => {
-    capture();
+  const sendImageSIO = useCallback(() => {
+    const imgSrc = capture();
     if (!imgSrc) return;
     socket.emit("process_image", imgSrc);
-  };
-
-  const calcResult = () => {
-    onFinish();
-    // receive result from server
-    const isWin = true;
-    setIsWin(isWin);
-  };
+  }, [capture, socket]);
 
   useEffect(() => {
     const ID = setInterval(sendImageSIO, PERIOD_SIO);
     return () => {
       clearInterval(ID);
     };
-  }, []);
+  }, [sendImageSIO]);
 
   useEffect(() => {
     socket.on("process_image_response", (data) => {
@@ -52,9 +44,11 @@ const PlayGame = ({ mask, onFinish, setIsWin, stage }) => {
     if (counter > 0) {
       setTimeout(() => setCounter(counter - 1), 1000);
     } else {
-      calcResult();
+      onFinish();
+      // receive result from server
+      setIsWin(true);
     }
-  }, [counter]);
+  }, [counter, onFinish, setIsWin]);
 
   return (
     <div className="round-border main-box">
@@ -69,8 +63,12 @@ const PlayGame = ({ mask, onFinish, setIsWin, stage }) => {
           height={618}
           width={824}
         />
-        <img className="outline" src={outline} alt="outline image" />
-        <img className="tranparent-background" src={background} alt="background image" />
+        <img className="outline" src={outline} alt="outline" />
+        <img
+          className="tranparent-background"
+          src={background}
+          alt="background"
+        />
       </div>
       {/* {imgSrc && <img src={imgSrc} alt="screenshot" />} */}
     </div>
