@@ -5,24 +5,35 @@ import numpy as np
 import pyopenpose as op
 
 class PoseDetector:
-    def __init__(self, model_path="./models/"):
-        # load models 
-        params = dict()
-        params["model_folder"] = model_path
-        print("[*] success loading model from", model_path)
+    def __init__(self, model_path="./models/", test=False):
+        self.test = test
+        if test:
+            print("[!] WARNING: in testing mode")
+            testKeyPoints = np.arange(75).reshape(1, 25, 3)
+            for i in range(25):
+                testKeyPoints[0][i][3] = 1.0
+            self.testKeyPoints = testKeyPoints
+        else:
+            # load models 
+            params = dict()
+            params["model_folder"] = model_path
+            print("[*] success loading model from", model_path)
 
-        # Starting OpenPose
-        self.opWrapper = op.WrapperPython()
-        self.opWrapper.configure(params)
-        self.opWrapper.start()
+            # Starting OpenPose
+            self.opWrapper = op.WrapperPython()
+            self.opWrapper.configure(params)
+            self.opWrapper.start()
+        
         print("[*] openpose start!")
 
     def processImage(self, imageToProcess):
-        datum = op.Datum()
-        datum.cvInputData = imageToProcess
-        self.opWrapper.emplaceAndPop([datum])
-        return datum.poseKeypoints, datum.cvOutputData
-
+        if self.test:
+            return self.testKeyPoints, imageToProcess
+        else:
+            datum = op.Datum()
+            datum.cvInputData = imageToProcess
+            self.opWrapper.emplaceAndPop([datum])
+            return datum.poseKeypoints, datum.cvOutputData
 
 modelPath = join(dirname(__file__), '..', '..', 'openpose', 'models')
 pd = PoseDetector(model_path=modelPath)
