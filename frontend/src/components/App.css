@@ -3,6 +3,7 @@
   /* background:  center center; */
   height: 100%;
   position: relative;
+  padding-top: 30px;
 }
 
 .background {
@@ -23,7 +24,6 @@
 }
 
 .App-logo {
-  margin-top: 30px;
   margin-bottom: 30px;
   height: 30vh;
   pointer-events: none;

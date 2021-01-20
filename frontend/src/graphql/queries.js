@@ -1,17 +1,39 @@
 import { gql } from "@apollo/client";
 
-// export const STAGES_QUERY = gql`
-//   query stages($username: String) {
-//     stages(username: $username) {
-//       images {
-//         uploader
-//         background
-//         mask
-//       }
-//       difficulty
-//     }
-//   }
-// `;
+export const STAGES_QUERY = gql`
+  query {
+    allStages {
+      edges {
+        node {
+          id
+          difficulty
+          thumbnail
+        }
+      }
+    }
+  }
+`;
+
+export const STAGE_QUERY = gql`
+  query stageById($id: ID!) {
+    allStages(id: $id) {
+      edges {
+        node {
+          id
+          difficulty
+          images {
+            edges {
+              node {
+                background
+                outline
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 // export const GALLERIES_QUERY = gql`
 //   query galleryImages($usermame: String) {

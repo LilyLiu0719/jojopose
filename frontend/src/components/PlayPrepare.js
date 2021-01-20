@@ -1,45 +1,62 @@
 import React from "react";
+import { Spin } from "antd";
 import JoJoText from "./JoJoText";
 import demo from "../static/img/demo.gif";
 
-const PlayPrepare = ({ onToLevel, onNext, stage }) => {
+const PlayPrepare = ({ onToLevel, onNext, index, stage, loading }) => {
   return (
     <div className="round-border main-box">
-      <JoJoText style={{ fontSize: "35px" }}>Please Fill in the shape</JoJoText>
+      <JoJoText style={{ fontSize: "30px" }}>Please Fill in the shape</JoJoText>
       <br />
-      <JoJoText style={{ fontSize: "35px" }}>with your sexy body</JoJoText>
+      <JoJoText style={{ fontSize: "30px" }}>with your sexy body</JoJoText>
       <br />
-      <div
-        className="row-flex"
-        // style={{
-        //   padding: "1em 0",
-        // }}
-      >
-      <img src={demo} style={{width:"29%"}}/>
-      <img src={stage} style={{width:"50%", borderRadius: "30px"}}/>
-      </div>
-      <br />
-      <div
-        className="row-flex"
-        style={{
-          padding: "1em 15%",
-        }}
-      >
-        <div className="button">
-          <JoJoText style={{ fontSize: "35px" }} onClick={onToLevel}>
-            back
-          </JoJoText>
+      <img
+        src={demo}
+        style={{ width: "29%", margin: "0 auto" }}
+        alt="demo animation"
+      />
+      {loading ? (
+        <div className="image-layers h-center column-flex">
+          <Spin size="large" />
         </div>
-        <div className="button">
-          <JoJoText
-            className="button"
-            style={{ fontSize: "35px", color: "#8A2195" }}
-            onClick={onNext}
+      ) : (
+        <>
+          <div className="image-layers h-center" style={{ background: "#000" }}>
+            <img
+              className="transparent-background"
+              src={stage.images.edges[index].node.background}
+              alt="example background"
+            />
+            <img
+              className="outline"
+              src={stage.images.edges[index].node.outline}
+              alt="example outline"
+            />
+          </div>
+          <br />
+          <div
+            className="row-flex"
+            style={{
+              padding: "1em 15%",
+            }}
           >
-            start
-          </JoJoText>
-        </div>
-      </div>
+            <div className="button">
+              <JoJoText style={{ fontSize: "35px" }} onClick={onToLevel}>
+                back
+              </JoJoText>
+            </div>
+            <div className="button">
+              <JoJoText
+                className="button"
+                style={{ fontSize: "35px", color: "#8A2195" }}
+                onClick={onNext}
+              >
+                start
+              </JoJoText>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
