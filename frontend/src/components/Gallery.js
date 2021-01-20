@@ -47,9 +47,11 @@ const Collection = ({ onToMenu, onSelect }) => {
                 </JoJoText>
               </div>
               <div className="button">
-                <JoJoText style={{ fontSize: "35px" }} onClick={null}>
-                  download
-                </JoJoText>
+                <a href={image} download>
+                  <JoJoText style={{ fontSize: "35px" }} onClick={null}>
+                    DOWNLOAD
+                  </JoJoText>
+                </a>
               </div>
             </div>
           </>

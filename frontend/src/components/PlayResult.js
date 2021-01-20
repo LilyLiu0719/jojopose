@@ -29,9 +29,11 @@ const PlayResult = ({
               <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
             </div>
             <div className="button" onClick={null}>
+            <a href={resultImage} download>
               <JoJoText style={{ fontSize: "35px", color: "#8A2195" }}>
                 DOWNLOAD
               </JoJoText>
+              </a>
             </div>
             {!finished && (
               <div className="button" onClick={onToNext}>
