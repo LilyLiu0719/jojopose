@@ -15,10 +15,11 @@ const PlayLevel = ({ onSelect }) => {
           style={{ cursor: "pointer" }}
           src={src}
           onClick={onClick}
+          alt="level thumbnail"
         />
-        <div className="level-diffculty">
+        <div className="level-difficulty">
           {arr.map((e) => (
-            <img src={e} />
+            <img src={e} alt="difficulty-indicator" />
           ))}
         </div>
       </div>
