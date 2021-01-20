@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import atoID from "../utils/atoID";
 import Webcam from "react-webcam";
 import useConnection from "../hooks/useConnection";
 import JoJoText from "./JoJoText";
@@ -11,6 +12,8 @@ const PlayGame = ({ onFinish, index, stage }) => {
   const webcamRef = useRef(null);
   const [counter, setCounter] = useState(GAME_TIME);
 
+  const images = stage.images.edges[index].node;
+
   const capture = useCallback(
     () => webcamRef && webcamRef.current.getScreenshot(),
     [webcamRef]
@@ -19,8 +22,12 @@ const PlayGame = ({ onFinish, index, stage }) => {
   const sendImageSIO = useCallback(() => {
     const imgSrc = capture();
     if (!imgSrc) return;
-    socket.emit("process_image", { image_uri: imgSrc, stage: stage });
-  }, [capture, socket, stage]);
+    socket.emit("process_image", {
+      image_uri: imgSrc,
+      stage_id: atoID(stage.id),
+      image_id: atoID(images.id),
+    });
+  }, [capture, socket, stage, images]);
 
   useEffect(() => {
     const ID = setInterval(sendImageSIO, PERIOD_SIO);
@@ -46,8 +53,6 @@ const PlayGame = ({ onFinish, index, stage }) => {
       onFinish(false, null);
     }
   }, [counter, onFinish]);
-
-  const images = stage.images.edges[index].node;
 
   return (
     <div className="round-border main-box">
