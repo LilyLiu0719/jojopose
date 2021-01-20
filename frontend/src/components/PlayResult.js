@@ -9,11 +9,20 @@ const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {
           <JoJoText style={{ fontSize: "35px" }}>YOU WIN!</JoJoText>
           <br />
           <img src="1-1.png" alt="resultImage" />
-          <div className="button" onClick={null}>
-            <JoJoText style={{ fontSize: "35px" }}>DOWNLOAD</JoJoText>
-          </div>
-          <div className="button" onClick={onToMenu}>
-            <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
+          <div
+            className="row-flex"
+            style={{
+              padding: "1em 15%",
+            }}
+          >
+            <div className="button" onClick={onToMenu}>
+              <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
+            </div>
+            <div className="button" onClick={null}>
+              <JoJoText style={{ fontSize: "35px", color: "#8A2195" }}>
+                DOWNLOAD
+              </JoJoText>
+            </div>
           </div>
         </>
       ) : (
@@ -22,12 +31,20 @@ const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {
           <br />
           <img src="1-1.png" alt="resultImage" />
           <br />
-          <div className="button" onClick={onToLevel}>
-            <JoJoText style={{ fontSize: "35px" }}>TRY AGAIN</JoJoText>
-          </div>
-          <br />
-          <div className="button" onClick={onToMenu}>
-            <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
+          <div
+            className="row-flex"
+            style={{
+              padding: "1em 15%",
+            }}
+          >
+            <div className="button" onClick={onToMenu}>
+              <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
+            </div>
+            <div className="button" onClick={onToLevel}>
+              <JoJoText style={{ fontSize: "35px", color: "#8A2195" }}>
+                TRY AGAIN
+              </JoJoText>
+            </div>
           </div>
         </>
       )}

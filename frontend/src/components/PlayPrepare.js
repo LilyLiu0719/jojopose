@@ -1,7 +1,7 @@
 import React from "react";
 import JoJoText from "./JoJoText";
 
-const PlayPrepare = ({ onNext, stage }) => {
+const PlayPrepare = ({ onToLevel, onNext, stage }) => {
   return (
     <div className="round-border main-box">
       <JoJoText style={{ fontSize: "35px" }}>Please Fill in the shape</JoJoText>
@@ -10,13 +10,30 @@ const PlayPrepare = ({ onNext, stage }) => {
       <br />
       <img src={stage} />
       <br />
-      <JoJoText
-        className="button"
-        style={{ fontSize: "35px", color: "#8A2195", align: "right" }}
-        onClick={onNext}
+      <div
+        className="row-flex"
+        style={{
+          padding: "1em 15%",
+        }}
       >
-        start
-      </JoJoText>
+        <div className="button">
+          <JoJoText
+            style={{ fontSize: "35px" }}
+            onClick={onToLevel}
+          >
+            back
+          </JoJoText>
+        </div>
+        <div className="button">
+          <JoJoText
+            className="button"
+            style={{ fontSize: "35px", color: "#8A2195" }}
+            onClick={onNext}
+          >
+            start
+          </JoJoText>
+        </div>
+      </div>
     </div>
   );
 };

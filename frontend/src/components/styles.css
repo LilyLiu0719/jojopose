@@ -12,9 +12,6 @@
 }
 
 .main-box {
-  /* margin: 4em 4em;
-  width: auto;
-  height: 100%; */
   position: absolute;
   left: 4em;
   right: 4em;
@@ -24,6 +21,7 @@
 
 .main-box img {
   height: 80%;
+  width: 100%;
   padding: 1em;
 }
 
@@ -107,4 +105,43 @@
 
 .button :hover {
   transform: scale(1.2);
+}
+
+.row-flex {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+.image-layers {
+  position: relative;
+  height: 618px;
+  width: 824px;
+}
+
+.image-layers video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.image-layers img {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.image-layers .outline {
+  z-index: 2;
+}
+
+.image-layers .tranparent-background {
+  z-index: 1;
+  opacity: 0.4;
 }
