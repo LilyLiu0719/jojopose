@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Button, Upload, Layout, Space } from "antd";
+import { Button, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 import useSocket from "../hooks/useSocket";

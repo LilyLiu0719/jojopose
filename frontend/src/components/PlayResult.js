@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import JoJoText from "./JoJoText";
 
 const PlayResult = ({ result, resultImage, onToMenu, onToLevel }) => {

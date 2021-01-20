@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Upload, Layout, Space } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { useMutation } from "@apollo/client";
+import { User, getUserID } from "../contexts/user";
 
+import displayStatus from "../utils/displayStatus";
+import { UPLOAD_IMAGE_MUTATION } from "../graphql";
 import {
   initialize,
   resetPoly,
   updateImage,
   resizeStage,
-  downloadImage,
-  downloadPreview,
+  getImageURI,
   backFromPreview,
 } from "../canvas";
 
@@ -25,8 +28,22 @@ export default function Label() {
       resizeStage(stage, parent.clientWidth, parent.clientHeight);
     });
   }, []);
+
+  const [loading, setLoading] = useState(false);
+  const { user } = useContext(User);
+  const userID = getUserID(user);
+
+  const uploadImage = useMutation(UPLOAD_IMAGE_MUTATION)[0];
   return (
-    <Layout style={{ height: "100%" }}>
+    <Layout
+      style={{
+        position: "absolute",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "0",
+      }}
+    >
       <Content id="stage-parent">
         <div id="container" />
       </Content>
@@ -53,8 +70,24 @@ export default function Label() {
           </Button>
           <Button
             type="primary"
-            onClick={downloadImage}
-            onMouseOver={downloadPreview}
+            loading={loading}
+            onClick={() => {
+              setLoading(true);
+              uploadImage({
+                variables: { uploaderID: userID, ...getImageURI() },
+              })
+                .then(() => {
+                  displayStatus({ type: "success", msg: "Image uploaded." });
+                  setLoading(false);
+                })
+                .catch(() => {
+                  displayStatus({
+                    type: "error",
+                    msg: "Error occurred when uploading image.",
+                  });
+                  setLoading(false);
+                });
+            }}
             onMouseOut={backFromPreview}
           >
             Confirm

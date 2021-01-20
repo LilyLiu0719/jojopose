@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Row, Col } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import React from "react";
 import JoJoText from "./JoJoText";
 
 const Menu = ({ onSelect }) => {
@@ -23,6 +21,11 @@ const Menu = ({ onSelect }) => {
       <div className="button" onClick={() => onSelect("Setting")}>
         <JoJoText style={{ fontSize: fontSize[1], color: "#F0AA09" }}>
           SETTING
+        </JoJoText>
+      </div>
+      <div className="button" onClick={() => onSelect("Upload")}>
+        <JoJoText style={{ fontSize: fontSize[1], color: "#3978BD" }}>
+          UPLOAD
         </JoJoText>
       </div>
     </div>
