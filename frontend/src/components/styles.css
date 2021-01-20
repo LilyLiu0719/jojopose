@@ -53,14 +53,10 @@
 }
 
 .level-container {
-  /* display: grid; */
-  /* grid-template-columns: 1fr 1fr 1fr; */
   overflow: hidden;
 }
 
 .level-container > img {
-  /* display: grid; */
-  /* grid-template-columns: 1fr 1fr 1fr; */
   border: 4px solid black;
   border-radius: 20px;
   padding: 0;
