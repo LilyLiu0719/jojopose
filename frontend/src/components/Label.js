@@ -49,28 +49,28 @@ export default function Label({ onToMenu }) {
         <div id="container" />
       </Content>
       <Footer className={classes.footer} style={{ backgroundColor: "#fff" }}>
-        <div className="button">
-          <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
-            back
-          </JoJoText>
+        <div className="row-flex" style={{ alignSelf: "flex-start" }}>
+          <div className="button" style={{ marginRight: "2em" }}>
+            <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
+              back
+            </JoJoText>
+          </div>
+          <Upload
+            maxCount={1}
+            listType="picture"
+            beforeUpload={(file) => {
+              let reader = new FileReader();
+              reader.addEventListener("loadend", () => {
+                updateImage(reader.result);
+              });
+              reader.readAsDataURL(file);
+              return false; // Do not send http request
+            }}
+            className={classes.rowFlex}
+          >
+            <Button icon={<UploadOutlined />}>Upload Image</Button>
+          </Upload>
         </div>
-        <Upload
-          maxCount={1}
-          listType="picture"
-          beforeUpload={(file) => {
-            let reader = new FileReader();
-            reader.addEventListener("loadend", () => {
-              updateImage(reader.result);
-            });
-            reader.readAsDataURL(file);
-            return false; // Do not send http request
-          }}
-          className={classes.rowFlex}
-          style={{ alignSelf: "flex-start" }}
-        >
-          <Button icon={<UploadOutlined />}>Upload Image</Button>
-        </Upload>
-
         <Space>
           <Button danger onClick={resetPoly}>
             Clear points

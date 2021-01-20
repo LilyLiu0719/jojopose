@@ -1,5 +1,5 @@
 import React from "react";
-import { Slider, Switch } from "antd";
+import { Slider } from "antd";
 import JoJoText from "./JoJoText";
 
 const Setting = ({ onToMenu, volume, setVolume }) => {

@@ -32,9 +32,12 @@ const Collection = ({ onToMenu }) => {
         </JoJoText>
         {image ? (
           <>
-            <div className="level-container" style={{ height: "80%" }}>
-              <img src={image} />
-            </div>
+            <br />
+            <img
+              src={image}
+              alt="maximized"
+              style={{ maxHeight: "calc(100% - 4.8em - 35px)" }}
+            />
             <div
               className="row-flex"
               style={{

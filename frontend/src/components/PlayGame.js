@@ -5,7 +5,7 @@ import useConnection from "../hooks/useConnection";
 import JoJoText from "./JoJoText";
 
 const PERIOD_SIO = 1000;
-const GAME_TIME = 10;
+const GAME_TIME = 300;
 
 const PlayGame = ({ onFinish, index, stage }) => {
   const { socket } = useConnection();
