@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect, useContext, useCallback} from "react";
 import JoJoText from "./JoJoText";
 import failedImage from "../static/img/failed.jpg";
 import { useMutation } from "@apollo/client";
 import { CREATE_GALLERY_MUTATION } from "../graphql";
 import { User, getUserID } from "../contexts/user";
+import displayStatus from "../utils/displayStatus";
 
 const PlayResult = ({
   result,
@@ -49,7 +50,7 @@ const PlayResult = ({
   );
   
   useEffect(() => {
-    uploadImage(userID, password, resultImage);
+    uploadGallery(userID, password, resultImage);
   }, [uploadGallery, password, resultImage]);
 
   return (
