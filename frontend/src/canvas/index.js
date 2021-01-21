@@ -6,6 +6,8 @@ import {
   outlineLineAttr,
 } from "../canvas/constants";
 
+const ratio = 0.75;
+const IMAGE_WIDTH = 824;
 // States
 const flattenedPoints = [];
 const indicationPoints = [];
@@ -51,10 +53,12 @@ let polyOutline = new Konva.Line({
 layerOutline.add(polyOutline);
 
 function initCanvas(width, height) {
+  const scaledHeight = Math.min(height, Math.floor(width * ratio));
+  const scaledWidth = Math.floor(scaledHeight / ratio);
   const stage = new Konva.Stage({
     container: "container",
-    width: width,
-    height: height,
+    width: scaledWidth,
+    height: scaledHeight,
   });
 
   stage.add(layerImg);
@@ -192,21 +196,23 @@ export function updateImage(src) {
   let image = new Image();
   image.onload = () => {
     const parent = document.getElementById("stage-parent");
-    const scale = Math.min(
-      parent.clientWidth / image.width,
-      parent.clientHeight / image.height
-    );
+    const width = parent.clientWidth;
+    const height = parent.clientHeight;
 
-    const newHeight = Math.ceil(image.height * scale);
-    const newWidth = Math.ceil(image.width * scale);
-    imageInfo = { height: newHeight, width: newWidth };
+    const newWidth = IMAGE_WIDTH;
+    const newHeight = Math.floor((IMAGE_WIDTH / image.width) * image.height);
+    const offsetY = IMAGE_WIDTH * ratio - newHeight;
+
     backgroundImage.width(newWidth);
     backgroundImage.height(newHeight);
+    backgroundImage.y(offsetY);
     backgroundImage.image(image);
+    layerImg.batchDraw();
 
+    const scale = width / newWidth;
     const stage = layerImg.getStage();
-    stage.width(newWidth);
-    stage.height(newHeight);
+    stage.scale({ x: scale, y: scale });
+
     layerImg.batchDraw();
     resetPoly();
   };
@@ -216,12 +222,17 @@ export function updateImage(src) {
 
 export function resizeStage(stage, width, height) {
   if (!imageInfo) return;
-  const scale = Math.min(width / imageInfo.width, height / imageInfo.height);
-  const newWidth = Math.floor(imageInfo.width * scale);
-  const newHeight = Math.floor(imageInfo.height * scale);
-  stage.width(newWidth);
-  stage.height(newHeight);
+  const scaledHeight = Math.min(height, Math.floor(width * ratio));
+  const scaledWidth = Math.floor(scaledHeight / ratio);
+  const scale = IMAGE_WIDTH / scaledWidth;
+  const offsetY = Math.floor(
+    scaledHeight - (scaledWidth / imageInfo.width) * imageInfo.height
+  );
+
+  stage.width(scaledWidth);
+  stage.height(scaledHeight);
   stage.scale({ x: scale, y: scale });
+  backgroundImage.y(offsetY);
   stage.draw();
 }
 
