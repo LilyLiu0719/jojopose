@@ -1,5 +1,5 @@
 import React from "react";
-import { Slider } from "antd";
+import { Slider, Progress } from "antd";
 import JoJoText from "./JoJoText";
 
 const Setting = ({ onToMenu, volume, setVolume }) => {
@@ -20,6 +20,7 @@ const Setting = ({ onToMenu, volume, setVolume }) => {
             padding: "1em 15%",
           }}
         >
+          {/* <Progress percent={volume} showInfo={false} status="active" strokeWidth="20px"/> */}
           <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
             back
           </JoJoText>
