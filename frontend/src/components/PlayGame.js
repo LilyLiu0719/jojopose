@@ -14,7 +14,11 @@ const PlayGame = ({ onFinish, index, stage }) => {
   const [counter, setCounter] = useState(GAME_TIME);
   const [progress, setProgress] = useState(0);
   const [maxprog, setMaxprog] = useState(0);
-  const images = stage.images.edges[index].node;
+  const images =
+    stage &&
+    stage.images &&
+    stage.images.edges[index] &&
+    stage.images.edges[index].node;
 
   const capture = useCallback(
     () => webcamRef && webcamRef.current.getScreenshot(),
