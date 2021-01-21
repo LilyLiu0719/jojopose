@@ -8,11 +8,12 @@ import { Progress } from "antd";
 const PERIOD_SIO = 1000;
 const GAME_TIME = 100;
 
-const PlayGame = ({ onFinish, index, stage }) => {
+const PlayGame = ({ onFinish, index, stage}) => {
   const { socket } = useConnection();
   const webcamRef = useRef(null);
   const [counter, setCounter] = useState(GAME_TIME);
   const [progress, setProgress] = useState(0);
+  const [maxprog, setMaxprog] = useState(0);
   const images = stage.images.edges[index].node;
 
   const capture = useCallback(
@@ -37,9 +38,10 @@ const PlayGame = ({ onFinish, index, stage }) => {
 
   useEffect(() => {
     socket.on("process_image_response", (data) => {
+      if (data.score > maxprog) setMaxprog(data.score);
+      setProgress(data.score);
       if (!data.pass) return;
-      onFinish(true, data.image);
-      setProgress(data.score)
+      onFinish(true, data.image, maxprog);
     });
     return () => socket.off("process_image_response");
   }, [socket, onFinish]);

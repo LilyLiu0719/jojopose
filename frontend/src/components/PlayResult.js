@@ -9,6 +9,7 @@ const PlayResult = ({
   finished,
   onToLevel,
   onToNext,
+  maxScore,
 }) => {
   return (
     <div className="round-border main-box">
@@ -46,7 +47,7 @@ const PlayResult = ({
         <>
           <JoJoText style={{ fontSize: "35px" }}>FAILED...</JoJoText>
           <br />
-          <img src={failedImage} alt="road roller" />
+          <img src={failedImage} alt="road roller da" />
           <br />
           <div
             className="row-flex"
