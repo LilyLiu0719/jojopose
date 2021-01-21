@@ -269,3 +269,8 @@ export function backFromPreview() {
   layerMask.hide();
   layerOutline.hide();
 }
+
+export function confirmPoints() {
+  pointGroup.destroyChildren();
+  layerDraw.batchDraw();
+}

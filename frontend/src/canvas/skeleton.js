@@ -18,13 +18,19 @@ function dragBound(pos) {
 
 export class Skeleton {
   constructor() {
-    this.points = [...initPoints];
+    this.points = initPoints.map((p) => [...p]);
     this.lines = lineInfo.map((info, i) => [
-      ...this.points[info[0]],
-      ...this.points[info[1]],
+      ...initPoints[info[0]],
+      ...initPoints[info[1]],
     ]);
-    this.pointObjs = [];
-    this.lineObjs = [];
+    this.pointGroup = new Konva.Group();
+    this.lineGroup = new Konva.Group();
+  }
+
+  resetPos() {
+    this.pointGroup.destroyChildren();
+    this.lineGroup.destroyChildren();
+    this.createShape();
   }
 
   updatePoint(idx, x, y) {
@@ -44,8 +50,9 @@ export class Skeleton {
     });
   }
 
-  materialize(layer) {
-    this.pointObjs = this.points.map((i, idx) => {
+  createShape() {
+    const layer = this.pointGroup.getLayer();
+    this.points.forEach((i, idx) => {
       if (disabledPoints.has(idx)) {
         return null;
       }
@@ -60,33 +67,35 @@ export class Skeleton {
         this.updatePoint(idx, x, y);
         layer.batchDraw();
       });
-      return p;
+      this.pointGroup.add(p);
     });
-    this.lineObjs = this.lines.map((i, ind) => {
+    this.lines.forEach((i, ind) => {
       if (
         disabledPoints.has(lineInfo[ind][0]) ||
         disabledPoints.has(lineInfo[ind][1])
       ) {
         return null;
       }
-      return new Konva.Line({
-        points: i,
-        ...lineAttr,
-        stroke: lineColor[ind],
-      });
+      this.lineGroup.add(
+        new Konva.Line({
+          points: i,
+          ...lineAttr,
+          stroke: lineColor[ind],
+        })
+      );
     });
-    this.lineObjs.forEach((i) => i && layer.add(i));
-    this.pointObjs.forEach((i) => i && layer.add(i));
     layer.batchDraw();
   }
 
+  connect(layer) {
+    layer.add(this.lineGroup);
+    layer.add(this.pointGroup);
+  }
+
   static initialize() {
-    const layerDraw = new Konva.Layer({
-      width: 824,
-      height: 618,
-    });
+    const layerDraw = new Konva.Layer();
     const skeleton = new Skeleton();
-    skeleton.materialize(layerDraw);
+    skeleton.connect(layerDraw);
     return { layer: layerDraw, skeleton };
   }
 }

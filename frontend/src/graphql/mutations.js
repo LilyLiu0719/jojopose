@@ -38,12 +38,14 @@ export const UPLOAD_IMAGE_MUTATION = gql`
     $background: String!
     $mask: String!
     $outline: String!
+    $skeleton: [[Int]]!
   ) {
     uploadImage(
       uploaderID: $uploaderID
       background: $background
       mask: $mask
       outline: $outline
+      skeleton: $skeleton
     ) {
       image {
         id

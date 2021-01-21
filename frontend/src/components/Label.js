@@ -13,23 +13,29 @@ import {
   resizeStage,
   getImageURI,
   backFromPreview,
+  confirmPoints,
 } from "../canvas";
+import { Skeleton } from "../canvas/skeleton";
 
 import classes from "./Label.module.css";
 import JoJoText from "./JoJoText";
 
 const { Content, Footer } = Layout;
+const { layer: skeletonLayer, skeleton } = Skeleton.initialize();
 
 export default function Label({ onToMenu }) {
   // initialize canvas after div#container is mounted
   useEffect(() => {
     const parent = document.getElementById("stage-parent");
     const stage = initialize(parent.clientWidth, parent.clientHeight);
+    stage.add(skeletonLayer);
+    skeletonLayer.hide();
     window.addEventListener("resize", () => {
       resizeStage(stage, parent.clientWidth, parent.clientHeight);
     });
   }, []);
 
+  const [labelState, setLabelState] = useState("Mask");
   const [loading, setLoading] = useState(false);
   const { user } = useContext(User);
   const userID = getUserID(user);
@@ -72,33 +78,60 @@ export default function Label({ onToMenu }) {
           </Upload>
         </div>
         <Space>
-          <Button danger onClick={resetPoly}>
-            Clear points
-          </Button>
-          <Button
-            type="primary"
-            loading={loading}
-            onClick={() => {
-              setLoading(true);
-              uploadImage({
-                variables: { uploaderID: userID, ...getImageURI() },
-              })
-                .then(() => {
-                  displayStatus({ type: "success", msg: "Image uploaded." });
-                  setLoading(false);
+          {labelState === "Mask" ? (
+            <>
+              <Button danger onClick={resetPoly}>
+                Clear points
+              </Button>
+              <Button
+                type="primary"
+                onClick={() => {
+                  setLabelState("Skeleton");
+                  confirmPoints();
+                  skeleton.resetPos();
+                  skeletonLayer.show();
+                  skeletonLayer.getStage().draw();
+                }}
+              >
+                Next
+              </Button>
+            </>
+          ) : labelState === "Skeleton" ? (
+            <Button
+              type="primary"
+              loading={loading}
+              onClick={() => {
+                setLoading(true);
+                console.log(skeleton.points);
+                uploadImage({
+                  variables: {
+                    uploaderID: userID,
+                    skeleton: skeleton.points.map((p) => [
+                      Math.round(p[0]),
+                      Math.round(p[1]),
+                    ]),
+                    ...getImageURI(),
+                  },
                 })
-                .catch(() => {
-                  displayStatus({
-                    type: "error",
-                    msg: "Error occurred when uploading image.",
+                  .then(() => {
+                    displayStatus({ type: "success", msg: "Image uploaded." });
+                    setLoading(false);
+                  })
+                  .catch(() => {
+                    displayStatus({
+                      type: "error",
+                      msg: "Error occurred when uploading image.",
+                    });
+                    setLoading(false);
                   });
-                  setLoading(false);
-                });
-            }}
-            onMouseOut={backFromPreview}
-          >
-            Confirm
-          </Button>
+              }}
+              onMouseOut={backFromPreview}
+            >
+              Confirm
+            </Button>
+          ) : (
+            <Button disabled>Next</Button>
+          )}
         </Space>
       </Footer>
     </Layout>

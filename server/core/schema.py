@@ -2,6 +2,8 @@ import graphene
 from graphene.relay import Node
 from graphene_mongo import MongoengineConnectionField, MongoengineObjectType
 from .mongodb import models
+from .openpose import to_cv2_img
+import cv2
 import bcrypt
 
 
@@ -83,7 +85,7 @@ class CreateUser(graphene.Mutation):
 class UploadImage(graphene.Mutation):
     class Arguments:
         uploaderID = graphene.ID()
-        answer = graphene.String()
+        skeleton = graphene.List(graphene.List(graphene.Int), required=True)
         background = graphene.String(required=True)
         mask = graphene.String(required=True)
         outline = graphene.String(required=True)
@@ -96,18 +98,29 @@ class UploadImage(graphene.Mutation):
         background,
         mask,
         outline,
+        skeleton,
         uploaderID=None,
-        answer="1111111111111111111111111",
     ):
         uploader = models.User.objects(id=uploaderID).first() if uploaderID else None
+        maskImg = to_cv2_img(mask, cv2.IMREAD_UNCHANGED)
+
+        answer = [False] * 25
+        for i, point in enumerate(skeleton):
+            if mask[point[1], point[0]] > 0:  # in mask
+                answer[i] = True
+
+        ansewrStr = "".join("1" if i else "0" for i in answer)
+
         image = models.Image(
             uploader=uploader,
             background=background,
             mask=mask,
             outline=outline,
-            answer=answer,
+            answer=ansewrStr,
         )
         image.save()
+
+        models.Stage(thumbnail=background, images=[image], difficulty=0).save()
         return UploadImage(image=image)
 
 
