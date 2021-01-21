@@ -54,7 +54,7 @@ const PlayGame = ({ onFinish, index, stage }) => {
       // receive result from server
       onFinish(false, null, maxprog);
     }
-  }, [counter, onFinish]);
+  }, [counter, onFinish, maxprog]);
 
   return (
     <div className="round-border main-box">
