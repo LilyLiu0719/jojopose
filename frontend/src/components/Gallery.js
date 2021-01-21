@@ -3,6 +3,7 @@ import JoJoText from "./JoJoText";
 import { useQuery } from "@apollo/client";
 import { GALLERIES_QUERY } from "../graphql";
 import { Spin } from "antd";
+import { noGallery } from "../static/img/noGallery.png";
 
 const GalleryItem = ({ src, onClick }) => {
   return (
