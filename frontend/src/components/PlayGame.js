@@ -14,10 +14,12 @@ const PlayGame = ({ onFinish, index, stage }) => {
   const [counter, setCounter] = useState(GAME_TIME);
   const [progress, setProgress] = useState(0);
   const [maxprog, setMaxprog] = useState(0);
-  if (!stage || !stage.images || stage.images.length === index) {
-    return <div className="round-border main-box"></div>;
-  }
-  const images = stage.images.edges[index].node;
+  const images =
+    stage &&
+    stage.images &&
+    stage.images.edges &&
+    stage.images.edges[index] &&
+    stage.images.edges[index].node;
 
   const capture = useCallback(
     () => webcamRef && webcamRef.current.getScreenshot(),
@@ -59,6 +61,9 @@ const PlayGame = ({ onFinish, index, stage }) => {
     }
   }, [counter, onFinish, maxprog]);
 
+  if (!images) {
+    return <div className="round-border main-box"></div>;
+  }
   return (
     <div className="round-border main-box">
       <JoJoText>Time Left: </JoJoText>
