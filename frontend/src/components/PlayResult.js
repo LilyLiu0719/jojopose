@@ -51,7 +51,9 @@ const PlayResult = ({
   );
 
   useEffect(() => {
-    uploadGallery(userID, user.password, resultImage);
+    if (resultImage) {
+      uploadGallery(userID, user.password, resultImage);
+    }
   }, [uploadGallery, resultImage, userID, user]);
 
   return (
@@ -90,7 +92,9 @@ const PlayResult = ({
           <br />
           <img src={failedImage} alt="road roller da" />
           <br />
-          <JoJoText style={{ fontSize:"25px" }}>{`your Max score: ${maxScore}`}</JoJoText>
+          <JoJoText
+            style={{ fontSize: "25px" }}
+          >{`your Max score: ${maxScore}`}</JoJoText>
           <div
             className="row-flex"
             style={{
