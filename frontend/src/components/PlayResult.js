@@ -1,6 +1,9 @@
 import React from "react";
 import JoJoText from "./JoJoText";
 import failedImage from "../static/img/failed.jpg";
+import { useMutation } from "@apollo/client";
+import { CREATE_GALLERY_MUTATION } from "../graphql";
+import { User, getUserID } from "../contexts/user";
 
 const PlayResult = ({
   result,
@@ -10,6 +13,45 @@ const PlayResult = ({
   onToLevel,
   onToNext,
 }) => {
+  const { user, password } = useContext(User);
+  const userID = getUserID(user);
+
+  const createGallery = useMutation(CREATE_GALLERY_MUTATION)[0];
+ 
+  const uploadGallery = useCallback(
+    (userID, password, image) => {
+      if (userID === "" || password === "") {
+        displayStatus({ type: "danger", msg: "Missing userID or password." });
+        return;
+      }
+      createGallery({ variables: { userID, password, image } })
+        .then(({ data }) => {
+          if (data.createGallery.ok) {
+            displayStatus({
+              type: "success",
+              msg: "Successfully saved image.",
+            });
+          } else {
+            displayStatus({
+              type: "danger",
+              msg: "Wrong password or userID.",
+            });
+          }
+        })
+        .catch(() => {
+          displayStatus({
+            type: "danger",
+            msg: "Error occurred when trying to upload.",
+          });
+        });
+    },
+    [createGallery]
+  );
+  
+  useEffect(() => {
+    uploadImage(userID, password, resultImage);
+  }, [uploadGallery, password, resultImage]);
+
   return (
     <div className="round-border main-box">
       {result ? (

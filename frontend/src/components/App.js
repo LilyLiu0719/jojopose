@@ -14,8 +14,8 @@ import "./App.css";
 import "./styles.css";
 
 export default function App() {
-  const [gameState, setGameState] = useState("Login");
-  const [user, setUser] = useState(null);
+  const [gameState, setGameState] = useState("Menu");
+  const [user, setUser] = useState("null");
   const [volume, setVolume] = useState(50);
   const audioPlayer = useRef(null);
 
@@ -52,9 +52,9 @@ export default function App() {
         )}
         {user === null ? (
           <Login
-            onLogin={(user) => {
+            onLogin={(user, password) => {
               setGameState("Menu");
-              setUser(user);
+              setUser({ ...user, password });
               if (audioPlayer && audioPlayer.current) {
                 audioPlayer.current.play();
               }

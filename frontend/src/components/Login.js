@@ -31,7 +31,7 @@ const Login = ({ onLogin }) => {
               type: "success",
               msg: "Successfully logged in.",
             });
-            onLogin(data.createUser.user);
+            onLogin(data.createUser.user, password);
           } else {
             displayStatus({
               type: "danger",
