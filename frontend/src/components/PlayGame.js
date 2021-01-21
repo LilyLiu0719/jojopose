@@ -3,15 +3,16 @@ import atoID from "../utils/atoID";
 import Webcam from "react-webcam";
 import useConnection from "../hooks/useConnection";
 import JoJoText from "./JoJoText";
+import { Progress } from "antd";
 
 const PERIOD_SIO = 1000;
-const GAME_TIME = 300;
+const GAME_TIME = 100;
 
 const PlayGame = ({ onFinish, index, stage }) => {
   const { socket } = useConnection();
   const webcamRef = useRef(null);
   const [counter, setCounter] = useState(GAME_TIME);
-
+  const [progress, setProgress] = useState(0);
   const images = stage.images.edges[index].node;
 
   const capture = useCallback(
@@ -31,9 +32,7 @@ const PlayGame = ({ onFinish, index, stage }) => {
 
   useEffect(() => {
     const ID = setInterval(sendImageSIO, PERIOD_SIO);
-    return () => {
-      clearInterval(ID);
-    };
+    return () => clearInterval(ID);
   }, [sendImageSIO]);
 
   useEffect(() => {
@@ -75,7 +74,7 @@ const PlayGame = ({ onFinish, index, stage }) => {
           alt="background"
         />
       </div>
-      {/* {imgSrc && <img src={imgSrc} alt="screenshot" />} */}
+      <Progress percent={progress} showInfo={false} status="active" strokeWidth="20px"/>
     </div>
   );
 };
