@@ -85,10 +85,11 @@ def getScore(capture, mask, background, answer):
 
     threshold = answer.count(True)
     nMatch = sum(1 for m, a in zip(match, answer) if m and a)
+    score = int(100*nMatch/threshold)
     if nMatch >= threshold:
         merge = background.copy()
         merge[mask > 0] = capture[mask > 0]
         ret, buffer = cv2.imencode(".jpg", merge)
-        return b"data:image/jpeg;base64," + base64.b64encode(buffer), nMatch
+        return b"data:image/jpeg;base64," + base64.b64encode(buffer), score
     else:
-        return b"", nMatch
+        return b"", score

@@ -39,6 +39,7 @@ const PlayGame = ({ onFinish, index, stage }) => {
     socket.on("process_image_response", (data) => {
       if (!data.pass) return;
       onFinish(true, data.image);
+      setProgress(data.score)
     });
     return () => socket.off("process_image_response");
   }, [socket, onFinish]);
