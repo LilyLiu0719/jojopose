@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useCallback} from "react";
+import React, { useEffect, useContext, useCallback } from "react";
 import JoJoText from "./JoJoText";
 import failedImage from "../static/img/failed.jpg";
 import { useMutation } from "@apollo/client";
@@ -13,19 +13,20 @@ const PlayResult = ({
   finished,
   onToLevel,
   onToNext,
+  maxScore,
 }) => {
-  const { user, password } = useContext(User);
+  const { user } = useContext(User);
   const userID = getUserID(user);
 
   const createGallery = useMutation(CREATE_GALLERY_MUTATION)[0];
- 
+
   const uploadGallery = useCallback(
     (userID, password, image) => {
       if (userID === "" || password === "") {
         displayStatus({ type: "danger", msg: "Missing userID or password." });
         return;
       }
-      createGallery({ variables: { userID, password, image } })
+      createGallery({ variables: { ownerID: userID, password, image } })
         .then(({ data }) => {
           if (data.createGallery.ok) {
             displayStatus({
@@ -48,10 +49,10 @@ const PlayResult = ({
     },
     [createGallery]
   );
-  
+
   useEffect(() => {
-    uploadGallery(userID, password, resultImage);
-  }, [uploadGallery, password, resultImage]);
+    uploadGallery(userID, user.password, resultImage);
+  }, [uploadGallery, resultImage, userID, user]);
 
   return (
     <div className="round-border main-box">
@@ -89,7 +90,7 @@ const PlayResult = ({
         <>
           <JoJoText style={{ fontSize: "35px" }}>FAILED...</JoJoText>
           <br />
-          <img src={failedImage} alt="road roller" />
+          <img src={failedImage} alt="road roller da" />
           <br />
           <div
             className="row-flex"

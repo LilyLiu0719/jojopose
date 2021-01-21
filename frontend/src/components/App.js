@@ -15,7 +15,7 @@ import "./styles.css";
 
 export default function App() {
   const [gameState, setGameState] = useState("Menu");
-  const [user, setUser] = useState("null");
+  const [user, setUser] = useState(null);
   const [volume, setVolume] = useState(50);
   const audioPlayer = useRef(null);
 

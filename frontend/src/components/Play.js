@@ -13,6 +13,7 @@ const Play = ({ onToMenu }) => {
   const [stageID, setStageID] = useState(null);
   const [imageIndex, setImageIndex] = useState(0);
   const [result, setResult] = useState(null);
+  const [maxscore, setMaxscore] = useState(0);
   const { data, loading } = useQuery(STAGE_QUERY, {
     skip: stageID === null,
     variables: { id: stageID },
@@ -43,9 +44,10 @@ const Play = ({ onToMenu }) => {
         <PlayGame
           index={imageIndex}
           stage={stage}
-          onFinish={(won, result) => {
+          onFinish={(won, result, maxprog) => {
             setIsWin(won);
             setImageIndex(won ? imageIndex + 1 : 0);
+            setMaxscore(maxprog);
             if (result) {
               setResult(result);
             }
@@ -70,6 +72,7 @@ const Play = ({ onToMenu }) => {
             setPlayState("Prepare");
           }}
           resultImage={result}
+          maxScore={maxscore}
         />
       ) : (
         <>Play State Error</>

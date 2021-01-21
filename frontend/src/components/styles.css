@@ -4,7 +4,7 @@
 
 .round-border {
   background-color: white;
-  padding: 3em 5em;
+  padding: 3em 0;
   border: 4px solid black;
   border-radius: 20px;
 }
@@ -39,6 +39,7 @@
 }
 
 .level-grid-wrapper {
+  padding: 0em 5.2em;
   height: calc(100% - 80px);
   overflow-y: auto;
 }
@@ -50,7 +51,7 @@
   row-gap: 20px;
   align-items: center;
   margin-top: 2%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .level-container > img {

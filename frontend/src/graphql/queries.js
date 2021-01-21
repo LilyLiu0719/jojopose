@@ -39,8 +39,8 @@ export const STAGE_QUERY = gql`
 
 export const GALLERIES_QUERY = gql`
   query galleryImages($id: ID!, $password: String!) {
-    galleryImages(id: $id, password:$password) {
-      owner
+    galleryImages(ownerID: $id, password: $password) {
+      id
       data
     }
   }

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import JoJoText from "./JoJoText";
+import { User, getUserID } from "../contexts/user";
 import { useQuery } from "@apollo/client";
 import { GALLERIES_QUERY } from "../graphql";
 import { Spin } from "antd";
-import { noGallery } from "../static/img/noGallery.png";
+import refused from "../static/img/refused.jpg";
 
 const GalleryItem = ({ src, onClick }) => {
   return (
@@ -14,19 +15,11 @@ const GalleryItem = ({ src, onClick }) => {
 };
 
 const Collection = ({ onToMenu }) => {
+  const { user } = useContext(User);
   const [image, setImage] = useState(null);
-  const { data, loading } = useQuery(GALLERIES_QUERY);
-  // const imgSrc = [
-  //   "1-1.png",
-  //   "1-2.png",
-  //   "1-3.png",
-  //   "1-4.png",
-  //   "1-5.png",
-  //   "1-6.png",
-  //   "2-1.png",
-  //   "2-2.png",
-  //   "2-3.png",
-  // ];
+  const { data, loading } = useQuery(GALLERIES_QUERY, {
+    variables: { id: getUserID(user), password: user.password },
+  });
 
   return (
     <>
@@ -69,15 +62,23 @@ const Collection = ({ onToMenu }) => {
               </>
             ) : (
               <>
-                <div className="level-grid" style={{ height: "80%" }}>
-                  {data.galleryImages.edges.map(({ node }) => (
-                    <GalleryItem
-                      key={node.id}
-                      src={node.data}
-                      onClick={() => setImage(node.data)}
-                    />
-                  ))}
-                </div>
+                <br />
+                {data.galleryImages === null ||
+                data.galleryImages.length === 0 ? (
+                  <img src={refused} alt="refused" />
+                ) : (
+                  <div className="level-grid" style={{ height: "80%" }}>
+                    {data.galleryImages &&
+                      data.galleryImages.length &&
+                      data.galleryImages.map((node) => (
+                        <GalleryItem
+                          key={node.id}
+                          src={node.data}
+                          onClick={() => setImage(node.data)}
+                        />
+                      ))}
+                  </div>
+                )}
                 <div
                   className="button"
                   style={{

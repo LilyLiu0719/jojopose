@@ -3,7 +3,7 @@ from detect_pose import PoseDetector
 import cv2
 import os
 
-img_exts = ['.png', '.jpg', '.jpeg']
+img_exts = ['.png', '.jpg', '.jpeg', '.HEIC']
 
 if __name__=='__main__':
     poseDetector = PoseDetector()
@@ -16,7 +16,7 @@ if __name__=='__main__':
             print(f"processing image {os.path.join(path, f)}")
             img = cv2.imread(os.path.join(path, f))
             keypoints, result_img = poseDetector.processImage(img)
-            cv2.imwrite(f"results/result_{name}.png", result_img)
+            cv2.imwrite(f"/home/lily/jojopose/openpose/results/result_{name}.png", result_img)
     elif os.path.isfile(path):
         name, ext = os.path.splitext(path)
         name = name.split()[-1]
