@@ -24,7 +24,8 @@ def fetchImageWithCache(stageID, imageID):
         with open(join(cache_path, "answer"), "r") as f:
             answer = f.read()
     else:
-        image = fetchImage(imageID, cv2.IMREAD_UNCHANGED)
+        #image = fetchImage(imageID, cv2.IMREAD_UNCHANGED)
+        image = fetchImage(imageID)
         background = openpose.to_cv2_img(image.background)
         mask = openpose.to_cv2_img(
             image.mask, cv2.IMREAD_UNCHANGED
