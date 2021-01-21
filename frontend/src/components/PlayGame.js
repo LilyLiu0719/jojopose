@@ -39,7 +39,7 @@ const PlayGame = ({ onFinish, index, stage }) => {
     socket.on("process_image_response", (data) => {
       if (!data.pass) return;
       onFinish(true, data.image);
-      setProgress(data.score)
+      setProgress(data.score);
     });
     return () => socket.off("process_image_response");
   }, [socket, onFinish]);
@@ -75,7 +75,12 @@ const PlayGame = ({ onFinish, index, stage }) => {
           alt="background"
         />
       </div>
-      <Progress percent={progress} showInfo={false} status="active" strokeWidth="20px"/>
+      <Progress
+        percent={progress}
+        showInfo={false}
+        status="active"
+        strokeWidth={20}
+      />
     </div>
   );
 };

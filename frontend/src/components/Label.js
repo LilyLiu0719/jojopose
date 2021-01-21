@@ -51,7 +51,7 @@ export default function Label({ onToMenu }) {
       <Footer className={classes.footer} style={{ backgroundColor: "#fff" }}>
         <div className="row-flex" style={{ alignSelf: "flex-start" }}>
           <div className="button" style={{ marginRight: "2em" }}>
-            <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
+            <JoJoText className="back-button" onClick={onToMenu}>
               back
             </JoJoText>
           </div>

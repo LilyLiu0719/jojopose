@@ -1,4 +1,4 @@
-from os import environ, mkdir
+from os import environ, makedirs
 from os.path import exists, dirname, join
 from mongoengine import connect
 
@@ -24,13 +24,13 @@ def fetchImageWithCache(stageID, imageID):
         with open(join(cache_path, "answer"), "r") as f:
             answer = f.read()
     else:
-        #image = fetchImage(imageID, cv2.IMREAD_UNCHANGED)
         image = fetchImage(imageID)
         background = openpose.to_cv2_img(image.background)
         mask = openpose.to_cv2_img(
             image.mask, cv2.IMREAD_UNCHANGED
         )  # preserve alpha channel
         answer = image.answer
+        makedirs(cache_path)
         cv2.imwrite(join(cache_path, "background.png"), background)
         cv2.imwrite(join(cache_path, "mask.png"), mask)
         with open(join(cache_path, "answer"), "w") as f:

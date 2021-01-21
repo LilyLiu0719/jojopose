@@ -21,22 +21,16 @@ export const CREATE_USER_MUTATION = gql`
   }
 `;
 
-// export const CREATE_STAGE_MUTATION = gql`
-
-//   mutation createStage(
-//     $images: String!
-//     $difficulty: Int!
-//   ) {
-//     createUser(
-//       data: {
-//         images: $images
-//         difficulty: $difficulty
-//       }
-//     ) {
-
-//     }
-//   }
-// `;
+export const CREATE_GALLERY_MUTATION = gql`
+  mutation createGallery($ownerID: ID!, $password: String!, $image: String!) {
+    uploadGalleryImage(ownerID: $ownerID, password: $password, image: $image) {
+      galleryImage {
+        id
+      }
+      ok
+    }
+  }
+`;
 
 export const UPLOAD_IMAGE_MUTATION = gql`
   mutation uploadImage(

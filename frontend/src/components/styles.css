@@ -50,7 +50,7 @@
   row-gap: 20px;
   align-items: center;
   margin-top: 2%;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .level-container > img {
@@ -74,7 +74,7 @@
   background: transparent;
   z-index: 0;
   color: #e4518f;
-  font-size: 30px;
+  font-size: 35px;
   font-family: JoJo;
   font-style: italic;
   white-space: break-spaces;
@@ -154,4 +154,9 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+}
+
+.back-button {
+  font-size: 35px;
+  color: #3978bd;
 }
