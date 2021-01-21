@@ -6,21 +6,21 @@ const Setting = ({ onToMenu, volume, setVolume }) => {
   return (
     <>
       <div className="round-border main-box">
-        <div className="row-flex">
-          <JoJoText style={{ fontSize: "20px" }}>BGM Volume</JoJoText>
-          <Slider
-            value={volume}
-            onChange={(v) => setVolume(v)}
-            style={{ width: "20%" }}
-          />
+      <JoJoText style={{ fontSize: "35px", color: "#F0AA09" }}>
+          Setting
+        </JoJoText>
+        <div className="column-flex" style={{ height: "calc(100% - 70px)" }}>
+          <div className="row-flex">
+            <JoJoText style={{ fontSize: "30px" }}>BGM Volume</JoJoText>
+            <Slider
+              value={volume}
+              onChange={(v) => setVolume(v)}
+              style={{ width: "20%" }}
+            />
+          </div>
         </div>
-        <div
-          className="button"
-          style={{
-            padding: "1em 15%",
-          }}
-        >
-          <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
+        <div className="button">
+          <JoJoText className="back-button" onClick={onToMenu}>
             back
           </JoJoText>
         </div>

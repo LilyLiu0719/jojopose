@@ -18,6 +18,7 @@ def process_image(data):
     mask, background, answer = mongodb.fetchImageWithCache(
         data["stage_id"], data["image_id"]
     )
+    #openpose.printImg(mask)
     resultImg, score = openpose.getScore(capture, mask, background, answer)
     if resultImg:
         emit(

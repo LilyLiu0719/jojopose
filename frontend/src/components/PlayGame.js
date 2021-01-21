@@ -77,7 +77,12 @@ const PlayGame = ({ onFinish, index, stage}) => {
           alt="background"
         />
       </div>
-      <Progress percent={progress} showInfo={false} status="active" strokeWidth="20px"/>
+      <Progress
+        percent={progress}
+        showInfo={false}
+        status="active"
+        strokeWidth={20}
+      />
     </div>
   );
 };

@@ -53,12 +53,42 @@ def to_cv2_img(data_uri, flag=cv2.IMREAD_COLOR):
     img = cv2.imdecode(nparr, flag)
     return img
 
-
 def process(data_uri):
     keypoint, img = pd.processImage(to_cv2_img(data_uri))
     ret, buffer = cv2.imencode(".png", img)
     return b"data:image/png;base64," + base64.b64encode(buffer)
 
+def printImg(mask):
+    if mask.shape[2] == 4:
+        # use alpha channel
+        mask = mask[:, :, 3]
+    w = 60
+    h = int(mask.shape[1]*w/mask.shape[0]/2)
+    display = cv2.resize(mask, (w, h))
+    for i in range(display.shape[0]):
+        for j in range(display.shape[1]):
+            if display[i][j]>0:
+                print('#', end='')
+            else:
+                print('-', end='')
+        print()
+
+def printPoints(keypoints, size):
+    w = 60
+    h = int(size[1]*w/size[0]/2)
+    display = np.zeros((h, w))
+    for points in keypoints:
+        for i, p in enumerate(points):
+            x = int(p[0]*w/size[1])
+            y = int(p[1]*h/size[0])
+            display[y][x] = i
+    for i in range(display.shape[0]):
+        for j in range(display.shape[1]):
+            if display[i][j]>0:
+                print(int(display[i][j]), end='')
+            else:
+                print('-', end='')
+        print()
 
 def getScore(capture, mask, background, answer):
     captureDim = (capture.shape[1], capture.shape[0])
@@ -76,16 +106,20 @@ def getScore(capture, mask, background, answer):
         mask = mask[:, :, 3]
 
     keyPoints, _ = pd.processImage(capture)
+    #printPoints(keyPoints, mask.shape)
     match = [False] * 25
     for keyPoint in keyPoints:
         for i, point in enumerate(keyPoint):
-            if point[2] > 0 and mask[int(point[1]), int(point[0])] == 0:
+            if point[2] > 0 and mask[int(point[1]), int(point[0])]>0:
                 # if score > 0 and is in mask
                 match[i] = True
 
     threshold = answer.count(True)
     nMatch = sum(1 for m, a in zip(match, answer) if m and a)
     score = int(100*nMatch/threshold)
+    print(f"score:{nMatch}/{threshold}")
+    print("answer:", [i for i,x in enumerate(answer) if x])
+    print("mismatch:", [i for i,x in enumerate(match) if (answer[i] and (not x))])
     if nMatch >= threshold:
         merge = background.copy()
         merge[mask > 0] = capture[mask > 0]

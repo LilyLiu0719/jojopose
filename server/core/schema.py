@@ -15,6 +15,7 @@ class User(MongoengineObjectType):
     class Meta:
         model = models.User
         interfaces = (Node,)
+        exclude_fields = ("hashedPassword",)  # No need to query hashedPassword
 
 
 class Image(MongoengineObjectType):
@@ -29,11 +30,31 @@ class Stage(MongoengineObjectType):
         interfaces = (Node,)
 
 
+class GalleryImage(MongoengineObjectType):
+    class Meta:
+        model = models.GalleryImage
+        interfaces = (Node,)
+
+
 class Query(graphene.ObjectType):
     node = Node.Field()
     allStages = MongoengineConnectionField(Stage)
     allUsers = MongoengineConnectionField(User)
     allItems = MongoengineConnectionField(Item)
+
+    galleryImages = graphene.Field(
+        graphene.List(GalleryImage),
+        ownerID=graphene.ID(required=True),
+        password=graphene.String(required=True),
+    )  # Get gallery images of an owner
+
+    def resolve_galleryImages(root, info, ownerID, password):
+        owner = models.User.objects(id=ownerID).first()
+        if owner is None or not bcrypt.checkpw(
+            password.encode(), owner.hashedPassword.encode()
+        ):
+            return None
+        return list(models.GalleryImage.objects(owner=owner))
 
 
 class CreateUser(graphene.Mutation):
@@ -42,7 +63,7 @@ class CreateUser(graphene.Mutation):
         password = graphene.String(required=True)
 
     user = graphene.Field(lambda: User)
-    ok = graphene.Boolean()
+    ok = graphene.Boolean(required=True)
 
     def mutate(root, info, username, password):
         User = models.User
@@ -90,9 +111,30 @@ class UploadImage(graphene.Mutation):
         return UploadImage(image=image)
 
 
+class UploadGalleryImage(graphene.Mutation):
+    class Arguments:
+        ownerID = graphene.ID(required=True)
+        password = graphene.String(required=True)
+        image = graphene.String(required=True)
+
+    galleryImage = graphene.Field(lambda: GalleryImage)
+    ok = graphene.Boolean(required=True)
+
+    def mutate(root, info, ownerID, password, image):
+        owner = models.User.objects(id=ownerID).first()
+        if owner is None or not bcrypt.checkpw(
+            password.encode(), owner.hashedPassword.encode()
+        ):
+            return UploadGalleryImage(galleryImage=None, ok=False)
+        image = models.GalleryImage(owner=owner, data=image)
+        image.save()
+        return UploadGalleryImage(galleryImage=image, ok=True)
+
+
 class Mutation(graphene.ObjectType):
-    createUser = CreateUser.Field()
+    createUser = CreateUser.Field()  # Sign in or Sign up
     uploadImage = UploadImage.Field()
+    uploadGalleryImage = UploadGalleryImage.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation, types=[User, Stage])

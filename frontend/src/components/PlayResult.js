@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useContext, useCallback } from "react";
 import JoJoText from "./JoJoText";
 import failedImage from "../static/img/failed.jpg";
+import { useMutation } from "@apollo/client";
+import { CREATE_GALLERY_MUTATION } from "../graphql";
+import { User, getUserID } from "../contexts/user";
+import displayStatus from "../utils/displayStatus";
 
 const PlayResult = ({
   result,
@@ -11,6 +15,45 @@ const PlayResult = ({
   onToNext,
   maxScore,
 }) => {
+  const { user } = useContext(User);
+  const userID = getUserID(user);
+
+  const createGallery = useMutation(CREATE_GALLERY_MUTATION)[0];
+
+  const uploadGallery = useCallback(
+    (userID, password, image) => {
+      if (userID === "" || password === "") {
+        displayStatus({ type: "danger", msg: "Missing userID or password." });
+        return;
+      }
+      createGallery({ variables: { ownerID: userID, password, image } })
+        .then(({ data }) => {
+          if (data.createGallery.ok) {
+            displayStatus({
+              type: "success",
+              msg: "Successfully saved image.",
+            });
+          } else {
+            displayStatus({
+              type: "danger",
+              msg: "Wrong password or userID.",
+            });
+          }
+        })
+        .catch(() => {
+          displayStatus({
+            type: "danger",
+            msg: "Error occurred when trying to upload.",
+          });
+        });
+    },
+    [createGallery]
+  );
+
+  useEffect(() => {
+    uploadGallery(userID, user.password, resultImage);
+  }, [uploadGallery, resultImage, userID, user]);
+
   return (
     <div className="round-border main-box">
       {result ? (
@@ -27,11 +70,11 @@ const PlayResult = ({
             }}
           >
             <div className="button" onClick={onToMenu}>
-              <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
+              <JoJoText className="back-button">Menu</JoJoText>
             </div>
             <div className="button" onClick={null}>
               <a href={resultImage} download>
-                <JoJoText style={{ fontSize: "35px", color: "#8A2195" }}>
+                <JoJoText style={{ color: "#8A2195" }}>
                   DOWNLOAD
                 </JoJoText>
               </a>
@@ -56,10 +99,10 @@ const PlayResult = ({
             }}
           >
             <div className="button" onClick={onToMenu}>
-              <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
+              <JoJoText className="back-button">Menu</JoJoText>
             </div>
             <div className="button" onClick={onToLevel}>
-              <JoJoText style={{ fontSize: "35px", color: "#8A2195" }}>
+              <JoJoText style={{ color: "#8A2195" }}>
                 TRY AGAIN
               </JoJoText>
             </div>
