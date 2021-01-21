@@ -23,7 +23,7 @@ export const CREATE_USER_MUTATION = gql`
 
 export const CREATE_GALLERY_MUTATION = gql`
   mutation createGallery($ownerID: ID!, $password: String!, $image: String!) {
-    createGallery(ownerID: $ownerID, password: $password, image: $image) {
+    uploadGalleryImage(ownerID: $ownerID, password: $password, image: $image) {
       galleryImage {
         id
       }
