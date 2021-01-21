@@ -52,7 +52,7 @@ const PlayPrepare = ({ onToLevel, onNext, index, stage, loading }) => {
             }}
           >
             <div className="button">
-              <JoJoText style={{ fontSize: "35px" }} onClick={onToLevel}>
+              <JoJoText className="back-button" onClick={onToLevel}>
                 back
               </JoJoText>
             </div>

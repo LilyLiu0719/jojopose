@@ -69,11 +69,11 @@ const PlayResult = ({
             }}
           >
             <div className="button" onClick={onToMenu}>
-              <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
+              <JoJoText className="back-button">Menu</JoJoText>
             </div>
             <div className="button" onClick={null}>
               <a href={resultImage} download>
-                <JoJoText style={{ fontSize: "35px", color: "#8A2195" }}>
+                <JoJoText style={{ color: "#8A2195" }}>
                   DOWNLOAD
                 </JoJoText>
               </a>
@@ -98,10 +98,10 @@ const PlayResult = ({
             }}
           >
             <div className="button" onClick={onToMenu}>
-              <JoJoText style={{ fontSize: "35px" }}>Menu</JoJoText>
+              <JoJoText className="back-button">Menu</JoJoText>
             </div>
             <div className="button" onClick={onToLevel}>
-              <JoJoText style={{ fontSize: "35px", color: "#8A2195" }}>
+              <JoJoText style={{ color: "#8A2195" }}>
                 TRY AGAIN
               </JoJoText>
             </div>

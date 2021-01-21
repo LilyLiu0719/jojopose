@@ -30,9 +30,7 @@ const Collection = ({ onToMenu }) => {
   return (
     <>
       <div className="round-border main-box">
-        <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
-          Gallery
-        </JoJoText>
+        <JoJoText style={{ color: "8A2195" }}>Gallery</JoJoText>
         {loading ? (
           <div className="column-flex" style={{ height: "100%" }}>
             <Spin size="large" />
@@ -55,7 +53,7 @@ const Collection = ({ onToMenu }) => {
                 >
                   <div className="button">
                     <JoJoText
-                      style={{ fontSize: "35px" }}
+                      className="back-button"
                       onClick={() => setImage(null)}
                     >
                       back
@@ -63,9 +61,7 @@ const Collection = ({ onToMenu }) => {
                   </div>
                   <div className="button">
                     <a href={image} download>
-                      <JoJoText style={{ fontSize: "35px" }} onClick={null}>
-                        DOWNLOAD
-                      </JoJoText>
+                      <JoJoText onClick={null}>DOWNLOAD</JoJoText>
                     </a>
                   </div>
                 </div>
@@ -87,7 +83,7 @@ const Collection = ({ onToMenu }) => {
                     padding: "1em 15%",
                   }}
                 >
-                  <JoJoText style={{ fontSize: "35px" }} onClick={onToMenu}>
+                  <JoJoText className="back-button" onClick={onToMenu}>
                     back
                   </JoJoText>
                 </div>
