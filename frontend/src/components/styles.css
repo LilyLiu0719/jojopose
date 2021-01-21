@@ -120,8 +120,8 @@
 
 .image-layers {
   position: relative;
-  height: 618px;
-  width: 824px;
+  width: 82vmin;
+  height: 61vmin;
 }
 
 .image-layers video {
@@ -144,11 +144,12 @@
 
 .image-layers .outline {
   z-index: 2;
+  filter: drop-shadow(2px 2px 8px rgb(124, 255, 18));
 }
 
 .image-layers .transparent-background {
   z-index: 1;
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 .column-flex {

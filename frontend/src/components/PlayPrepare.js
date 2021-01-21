@@ -25,12 +25,7 @@ const PlayPrepare = ({ onToLevel, onNext, index, stage, loading }) => {
               justifyContent: "center",
             }}
           >
-            <img
-              src={demo}
-              className="h-center"
-              style={{ width: "400px", height: "400px" }}
-              alt="demo animation"
-            />
+            <img src={demo} className="h-center" alt="demo animation" />
             <div className="image-layers">
               <img
                 className="transparent-background"

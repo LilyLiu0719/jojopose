@@ -69,6 +69,7 @@ const PlayGame = ({ onFinish, index, stage }) => {
           screenshotFormat="image/jpeg"
           height={618}
           width={824}
+          style={{ width: "82vmin", height: "61vmin" }}
         />
         <img className="outline" src={images.outline} alt="outline" />
         <img
