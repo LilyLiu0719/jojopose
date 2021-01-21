@@ -74,9 +74,7 @@ const PlayResult = ({
             </div>
             <div className="button" onClick={null}>
               <a href={resultImage} download>
-                <JoJoText style={{ color: "#8A2195" }}>
-                  DOWNLOAD
-                </JoJoText>
+                <JoJoText style={{ color: "#8A2195" }}>DOWNLOAD</JoJoText>
               </a>
             </div>
             {!finished && (
@@ -92,7 +90,7 @@ const PlayResult = ({
           <br />
           <img src={failedImage} alt="road roller da" />
           <br />
-          <JoJoText >your max match score: {maxScore}</JoJoText>
+          <JoJoText>{`Max score: ${maxScore}`}</JoJoText>
           <div
             className="row-flex"
             style={{
@@ -103,9 +101,7 @@ const PlayResult = ({
               <JoJoText className="back-button">Menu</JoJoText>
             </div>
             <div className="button" onClick={onToLevel}>
-              <JoJoText style={{ color: "#8A2195" }}>
-                TRY AGAIN
-              </JoJoText>
+              <JoJoText style={{ color: "#8A2195" }}>TRY AGAIN</JoJoText>
             </div>
           </div>
         </>
