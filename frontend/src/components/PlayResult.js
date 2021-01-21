@@ -90,7 +90,7 @@ const PlayResult = ({
           <br />
           <img src={failedImage} alt="road roller da" />
           <br />
-          <JoJoText>{`Max score: ${maxScore}`}</JoJoText>
+          <JoJoText style={{ fontSize:"25px" }}>{`your Max score: ${maxScore}`}</JoJoText>
           <div
             className="row-flex"
             style={{
