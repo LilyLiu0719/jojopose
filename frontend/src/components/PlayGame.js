@@ -52,7 +52,7 @@ const PlayGame = ({ onFinish, index, stage }) => {
       setTimeout(() => setCounter(counter - 1), 1000);
     } else {
       // receive result from server
-      onFinish(false, null);
+      onFinish(false, null, maxprog);
     }
   }, [counter, onFinish]);
 

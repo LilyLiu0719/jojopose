@@ -92,6 +92,7 @@ const PlayResult = ({
           <br />
           <img src={failedImage} alt="road roller da" />
           <br />
+          <JoJoText >your max match score: {maxScore}</JoJoText>
           <div
             className="row-flex"
             style={{
