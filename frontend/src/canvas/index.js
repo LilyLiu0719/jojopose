@@ -207,9 +207,8 @@ export function updateImage(src) {
     backgroundImage.height(newHeight);
     backgroundImage.y(offsetY);
     backgroundImage.image(image);
-    layerImg.batchDraw();
 
-    const scale = width / newWidth;
+    const scale = Math.min(height / ratio, width) / newWidth;
     const stage = layerImg.getStage();
     stage.scale({ x: scale, y: scale });
 

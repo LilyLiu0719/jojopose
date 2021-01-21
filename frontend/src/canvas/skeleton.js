@@ -16,7 +16,7 @@ function dragBound(pos) {
   };
 }
 
-class Skeleton {
+export class Skeleton {
   constructor() {
     this.points = [...initPoints];
     this.lines = lineInfo.map((info, i) => [
@@ -62,28 +62,31 @@ class Skeleton {
       });
       return p;
     });
-    this.lineObjs = this.lines.map((i, ind) =>
-      !disabledPoints.has(lineInfo[ind][0]) &&
-      !disabledPoints.has(lineInfo[ind][1])
-        ? new Konva.Line({
-            points: i,
-            ...lineAttr,
-            stroke: lineColor[ind],
-          })
-        : null
-    );
+    this.lineObjs = this.lines.map((i, ind) => {
+      if (
+        disabledPoints.has(lineInfo[ind][0]) ||
+        disabledPoints.has(lineInfo[ind][1])
+      ) {
+        return null;
+      }
+      return new Konva.Line({
+        points: i,
+        ...lineAttr,
+        stroke: lineColor[ind],
+      });
+    });
     this.lineObjs.forEach((i) => i && layer.add(i));
     this.pointObjs.forEach((i) => i && layer.add(i));
     layer.batchDraw();
   }
-}
 
-export function initialize() {
-  const layerDraw = new Konva.Layer({
-    width: 824,
-    height: 618,
-  });
-  const s = new Skeleton();
-  s.materialize(layerDraw);
-  return layerDraw;
+  static initialize() {
+    const layerDraw = new Konva.Layer({
+      width: 824,
+      height: 618,
+    });
+    const skeleton = new Skeleton();
+    skeleton.materialize(layerDraw);
+    return { layer: layerDraw, skeleton };
+  }
 }

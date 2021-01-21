@@ -15,7 +15,7 @@ const pointSize = 6;
 export const pointAttr = getPointAttr(pointSize);
 
 export const lineAttr = {
-  stroke: "black",
+  stroke: "#00ff08",
   strokeWidth: 4,
   lineCap: "round",
   lineJoin: "round",
