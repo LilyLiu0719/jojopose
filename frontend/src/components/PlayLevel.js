@@ -29,7 +29,7 @@ const Level = ({ src, difficulty, onClick }) => {
   );
 };
 
-const PlayLevel = ({ onSelect }) => {
+const PlayLevel = ({ onSelect, onToMenu }) => {
   const { data, loading } = useQuery(STAGES_QUERY);
   return (
     <>
@@ -52,6 +52,12 @@ const PlayLevel = ({ onSelect }) => {
               ))}
             </div>
           )}
+        </div>
+        <br />
+        <div className="button">
+          <JoJoText className="back-button" onClick={onToMenu}>
+            Back
+          </JoJoText>
         </div>
       </div>
     </>

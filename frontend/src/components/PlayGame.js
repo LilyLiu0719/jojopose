@@ -8,7 +8,7 @@ import { Progress } from "antd";
 const PERIOD_SIO = 1000;
 const GAME_TIME = 100;
 
-const PlayGame = ({ onFinish, index, stage}) => {
+const PlayGame = ({ onFinish, index, stage }) => {
   const { socket } = useConnection();
   const webcamRef = useRef(null);
   const [counter, setCounter] = useState(GAME_TIME);
@@ -44,7 +44,7 @@ const PlayGame = ({ onFinish, index, stage}) => {
       onFinish(true, data.image, maxprog);
     });
     return () => socket.off("process_image_response");
-  }, [socket, onFinish]);
+  }, [socket, onFinish, maxprog]);
 
   // countdown timer
   useEffect(() => {

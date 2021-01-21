@@ -28,6 +28,9 @@ const Play = ({ onToMenu }) => {
             setStageID(stageID);
             setPlayState("Prepare");
           }}
+          onToMenu={() => {
+            onToMenu();
+          }}
         />
       ) : playState === "Prepare" ? (
         <PlayPrepare
