@@ -78,6 +78,10 @@ const PlayGame = ({ onFinish, index, stage}) => {
         />
       </div>
       <Progress
+        style={{ margin: "2em 5px", width: "calc(100% - 10px)" }}
+        strokeColor={
+          progress < 34 ? "#ff6a00" : progress < 67 ? "#cae43f" : "#87d068"
+        }
         percent={progress}
         showInfo={false}
         status="active"

@@ -4,6 +4,7 @@ import { User, getUserID } from "../contexts/user";
 import { useQuery } from "@apollo/client";
 import { GALLERIES_QUERY } from "../graphql";
 import { Spin } from "antd";
+import refused from "../static/img/refused.jpg";
 
 const GalleryItem = ({ src, onClick }) => {
   return (
@@ -64,9 +65,7 @@ const Collection = ({ onToMenu }) => {
                 <br />
                 {data.galleryImages === null ||
                 data.galleryImages.length === 0 ? (
-                  <JoJoText style={{ fontSize: "35px" }}>
-                    You don't have any images.
-                  </JoJoText>
+                  <img src={refused} alt="refused" />
                 ) : (
                   <div className="level-grid" style={{ height: "80%" }}>
                     {data.galleryImages &&
